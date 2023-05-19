@@ -12,3 +12,4 @@ Tools
 
   1. Visual studio code
   2. Git hub
+  3. Figma
