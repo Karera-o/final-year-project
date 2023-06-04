@@ -5,7 +5,7 @@ from django.shortcuts import render
 def signUp(request):
 
     pageTitle = 'SignUp'
-    content = {
+    context = {
         'pageTitle': pageTitle,
     }
     
@@ -14,11 +14,11 @@ def signUp(request):
 def signIn(request):
 
     pageTitle = 'SignIn'
-    content = {
+    context = {
         'pageTitle': pageTitle,
     }
     
-    return render(request, 'pages/signIn.html',content) 
+    return render(request, 'pages/signIn.html',context) 
 
 def adminDashboard(request):
     
