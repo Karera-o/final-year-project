@@ -7,7 +7,15 @@ class SignupForm(UserCreationForm):
 
     class Meta:
         model = Member
-        fields = ('email', 'password1', 'password2', 'first_name', 'last_name', 'phone')
+        fields = ('first_name','last_name','email', 'phone', 'password', 'password2',   )
+        widgets={
+            'first_name':forms.TextInput(attrs={'placeholder':'First name','class':'input'}), 
+            'last_name':forms.TextInput(attrs={'placeholder':'Last name','class':'input'}), 
+            # 'email':forms.EmailInput(attrs={'placeholder':'johndoe@gmail.com','class':'input'}), 
+            'phone':forms.TextInput(attrs={'placeholder':'0788888888','class':'input'}), 
+            'password1':forms.PasswordInput(attrs={'placeholder':'Password','class':'input'}), 
+            'password2':forms.PasswordInput(attrs={'placeholder':'comfirm password','class':'input'})
+        }
 
 class SigninForm(forms.Form):
     email = forms.EmailField(max_length=254)

@@ -2,14 +2,14 @@ from django.shortcuts import render
 
 # Create your views here.
 
-def signUp(request):
+# def signUp(request):
 
-    pageTitle = 'SignUp'
-    context = {
-        'pageTitle': pageTitle,
-    }
+#     pageTitle = 'SignUp'
+#     context = {
+#         'pageTitle': pageTitle,
+#     }
     
-    return render(request, 'pages/signUp.html',context)
+#     return render(request, 'pages/signUp.html',context)
 
 def signIn(request):
 
@@ -26,16 +26,31 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from .forms import SignupForm, SigninForm
 
-def signup(request):
+def signUp(request):
+    pageTitle = 'SignUp'
+
     if request.method == 'POST':
+        print('received')
+      
         form = SignupForm(request.POST)
         if form.is_valid():
+            print('valid')
             user = form.save()
+            print('received')
             login(request, user)
-            return redirect('home')  # Replace 'home' with the name of your home view
+            return redirect('admin-dashboard')  # Replace 'home' with the name of your home view
+        else:
+            print(form.errors)
+
     else:
         form = SignupForm()
-    return render(request, 'signup.html', {'form': form})
+    
+    context = {
+        'pageTitle': pageTitle,
+        'form': form
+    }
+    
+    return render(request, 'pages/signUp.html',context)
 
 def signin(request):
     if request.method == 'POST':
@@ -61,5 +76,9 @@ def signout(request):
     return render(request, 'pages/adminDashboard.html')
 
 def userDashboard(request):
+    
+    return render(request, 'pages/userDashboard.html')
+
+def adminDashboard(request):
     
     return render(request, 'pages/userDashboard.html')

@@ -8,6 +8,26 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <title>{{pageTitle}}</title>
+
+    <style type="text/tailwindcss">
+        @layer components{
+            .input{ 
+            @apply w-full outline-none;
+        }
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                primary: '#00295B',
+              }
+            }
+          }
+        }
+      </script>
 </head>
 <body class="h-[100vh] overflow-hidden">
    {% block content %}

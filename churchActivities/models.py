@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
@@ -6,11 +7,11 @@ class Department(models.Model):
     name = models.CharField(max_length=100)
     hod = models.ForeignKey('Member', on_delete=models.SET_NULL, null=True)
 
-class Member(models.Model):
+class Member(AbstractUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
-    phone = models.CharField(max_length=20)
+    phone = models.CharField(max_length=10)
     password = models.CharField(max_length=100)
 
 class Event(models.Model):
