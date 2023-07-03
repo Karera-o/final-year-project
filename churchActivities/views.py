@@ -73,12 +73,27 @@ def signout(request):
     return redirect('home')  # Replace 'home' with the name of your home view
 
     
-    return render(request, 'pages/adminDashboard.html')
+    return render(request, 'pages/index.html')
 
 def userDashboard(request):
     
-    return render(request, 'pages/userDashboard.html')
+    return render(request, 'pages/index.html')
 
 def adminDashboard(request):
     
-    return render(request, 'pages/userDashboard.html')
+    return render(request, 'pages/index.html')
+def members(request):
+    
+    return render(request, 'pages/members.html')
+def events(request):
+    
+    return render(request, 'pages/events.html')
+def activities(request):
+    
+    return render(request, 'pages/activities.html')
+def announcements(request):
+    
+    return render(request, 'pages/announcements.html')
+def logs(request):
+    
+    return render(request, 'pages/logs.html')

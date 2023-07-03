@@ -1,0 +1,62 @@
+{% load static %}
+<div class="sidebar bg-primary h-full w-[16%] text-white">
+
+    <ul class="text-white flex flex-col  items-center ">
+      <li class=" h-[10vh] w-full  font-extrabold cursor-pointer">
+        <a href="{% url 'dashboard' %}" class="flex items-center gap-x-1  py-3 px-5 h-full w-full">
+          <img src="{% static 'Images/adv_logo.svg' %}" alt="" class="w-8 ">
+          <p class="hide">AUCA_Church</p>
+        </a>
+      </li>
+      <li class="bg-white shadow-xl  w-full text-primary  cursor-pointer">
+        <!-- <img src="" alt=""> -->
+        <a href="{% url 'dashboard' %}" class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+        <i class="material-icons">dashboard</i>
+        <p href="index.html" class="hide">Dashboard</p>
+      </a>
+      </li>
+      <li  class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
+        <!-- <img src="" alt=""> -->
+        <a href="{% url 'members' %}" class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+          <a href="{% url 'members' %}" class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+          <i class="material-icons">people</i>
+        <p class="hide">Members
+        </p>
+        </a>
+      </li>
+      <li class="w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
+        <!-- <img src="" alt=""> -->
+        <a href="{% url 'events' %}" class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+        <i class="material-icons">event_available</i>
+        <p class="hide">Events</p>
+      </a>
+      </li>
+      <li class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
+        <!-- <img src="" alt=""> -->
+        <a href="{% url 'activities' %}" class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+        <i class="material-icons">local_activity</i>
+        <p class="hide">Activities</p>
+      </a>
+      </li>
+      <li class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
+        <!-- <img src="" alt=""> -->
+        <a href="{% url 'announcements' %}" class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+        <i class="material-icons">announcement</i>
+        <p class="hide">Announcements</p>
+      </a>
+      </li>
+      <li class=" w-full hover:bg-purple-200 hover:text-primary cursor-pointer">
+        <a href="{% url 'logs' %}" class="flex items-center gap-x-2  py-4 px-5 h-full w-full">
+        <i class="fa-solid fa-chart-line"></i>
+        <p  class="hide">Logs</p>
+      </a>
+      </li>
+   
+    </ul>
+    <div class="text-white ">
+      <a href="{% url 'signin' %}" class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <p  class="hide">Logout</p>
+    </a>
+    </div>
+  </div>
