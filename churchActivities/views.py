@@ -80,6 +80,10 @@ def userDashboard(request):
     return render(request, 'pages/index.html')
 
 def adminDashboard(request):
+
+    if request.headers.get('HX-Request'):
+    # if 'htmx' in request.GET:
+        return render(request, 'pages/index-template.html')
     
     return render(request, 'pages/index.html')
 def members(request):
