@@ -17,33 +17,33 @@
                 <div class="flex flex-col gap-y-5 w-full">
                     <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
                         <img src="{% static 'Images/icons/user.svg' %}" alt="" class="w-5">
-                        {% comment %} <input type="{{form.first_name.field.widget.input_type}}" placeholder="{{form.first_name.field.widget.attrs.placeholder}}" class="w-full outline-none" name='{{form.first_name.first_name}}'> {% endcomment %}
-                        {{form.first_name}}
+                        <input type="{{form.first_name.field.widget.input_type}}" placeholder="{{form.first_name.field.widget.attrs.placeholder}}" class="w-full outline-none" name='{{form.first_name.html_name}}'>
+                        {% comment %} {{form.first_name}} {% endcomment %}
                     </div>
                     <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
                         <img src="{% static 'Images/icons/user.svg' %}" alt="" class="w-5">
-                        {% comment %} <input type="text" placeholder="Last name" class="w-full outline-none"> {% endcomment %}
-                        {{form.last_name}}
+                        <input type="{{form.last_name.field.widget.input_type}}" placeholder="{{form.last_name.field.widget.attrs.placeholder}}" class="w-full outline-none" name='{{form.last_name.html_name}}'>
+                        {% comment %} {{form.last_name}} {% endcomment %}
                     </div>
                     <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
                         <img src="{% static 'Images/icons/email.svg' %}" alt="" class="w-4">
-                        {% comment %} <input type="email" placeholder="Email" class="input"> {% endcomment %}
-                        {{form.email}}
+                        <input type="{{form.email.field.widget.input_type}}" placeholder="{{form.email.field.widget.attrs.placeholder}}" class="input" name='{{form.email.html_name}}'>
+                        {% comment %} {{form.email}} {% endcomment %}
                     </div>
                     <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
                         <img src="{% static 'Images/icons/phone.svg' %}" alt="" class="w-4">
-                        {% comment %} <input type="tel" placeholder="Phone number" class="w-full outline-none"> {% endcomment %}
-                        {{form.phone}}
+                        <input type="{{form.phone.field.input_type}}" placeholder="{{form.phone.field.widget.attrs.placeholder}}" class="w-full outline-none" name='{{form.phone.html_name}}'>
+                        {% comment %} {{form.phone}} {% endcomment %}
                     </div>
                     <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
                         <img src="{% static 'Images/icons/password.svg' %}" alt="" class="w-4">
-                        {% comment %} <input type="password" placeholder="Password" class="w-full outline-none"> {% endcomment %}
-                        {{form.password1}}
+                        <input type="{{form.password1.field.widget.input_type}}" placeholder="{{form.password1.field.widget.attrs.placeholder}}" class="w-full outline-none" name='{{form.password1.html_name}}'>
+                        {% comment %} {{form.password1}} {% endcomment %}
                     </div>
                     <div class="flex items-center rounded-md gap-2  shadow-lg shadow-blue-50 px-2 py-2 border border-[#E0E6F0]">
                         <img src="{% static 'Images/icons/password.svg' %}" alt="" class="w-4">
-                        {% comment %} <input type="password" placeholder="Comfirm Password" class="w-full outline-none"> {% endcomment %}
-                        {{form.password2}}
+                        <input type="{{form.password2.field.widget.input_type}}" placeholder="{{form.password2.field.widget.attrs.placeholder}}" class="w-full outline-none" name='{{form.password2.html_name}}'>
+                        {% comment %} {{form.password2}} {% endcomment %}
                     </div>
                     
                 </div>

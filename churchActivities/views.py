@@ -1,31 +1,10 @@
-from django.shortcuts import render
-
-# Create your views here.
-
-# def signUp(request):
-
-#     pageTitle = 'SignUp'
-#     context = {
-#         'pageTitle': pageTitle,
-#     }
-    
-#     return render(request, 'pages/signUp.html',context)
-
-def signIn(request):
-
-    pageTitle = 'SignIn'
-    context = {
-        'pageTitle': pageTitle,
-    }
-    
-    return render(request, 'pages/signIn.html',context) 
-
-# def adminDashboard(request):
-
-from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
 from .forms import SignupForm, SigninForm
 
+
+
+#Signup
 def signUp(request):
     pageTitle = 'SignUp'
 
@@ -34,11 +13,12 @@ def signUp(request):
       
         form = SignupForm(request.POST)
         if form.is_valid():
-            print('valid')
             user = form.save()
-            print('received')
-            login(request, user)
-            return redirect('admin-dashboard')  # Replace 'home' with the name of your home view
+            password = form.cleaned_data['password1']
+            user = authenticate(request, username=user.username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
         else:
             print(form.errors)
 
@@ -52,22 +32,31 @@ def signUp(request):
     
     return render(request, 'pages/signUp.html',context)
 
-def signin(request):
+#Signin Page
+def signIn(request):
+    print('signin')
     if request.method == 'POST':
-        form = SigninForm(request.POST)
+        print('received')
+        form = SigninForm(request, data=request.POST)
         if form.is_valid():
+            print('valid')
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = authenticate(request, email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')  # Replace 'home' with the name of your home view
+                return redirect('dashboard')  
             else:
-                return render(request, 'signin.html', {'form': form, 'error': 'Invalid email or password.'})
+                print('The user does not exit')
+                return render(request, 'pages/signIn.html', {'form': form, 'error': 'Invalid email or password.'})
+        else:
+            print('error')
+            print(form.errors)
     else:
         form = SigninForm()
-    return render(request, 'signin.html', {'form': form})
+    return render(request, 'pages/signIn.html', {'form': form})
 
+#Signout 
 def signout(request):
     logout(request)
     return redirect('home')  # Replace 'home' with the name of your home view
@@ -75,29 +64,40 @@ def signout(request):
     
     return render(request, 'pages/index.html')
 
+#User dashboard
 def userDashboard(request):
     
     return render(request, 'pages/index.html')
 
+#Admin dashboard
 def adminDashboard(request):
 
     if request.headers.get('HX-Request'):
-    # if 'htmx' in request.GET:
         return render(request, 'pages/index-template.html')
     
     return render(request, 'pages/index.html')
+
+#Members page
 def members(request):
     
     return render(request, 'pages/members.html')
+
+#Events Page
 def events(request):
     
     return render(request, 'pages/events.html')
+
+#Activities Page
 def activities(request):
     
     return render(request, 'pages/activities.html')
+
+#Announcements Page
 def announcements(request):
     
     return render(request, 'pages/announcements.html')
+
+#Logs Page
 def logs(request):
     
     return render(request, 'pages/logs.html')
