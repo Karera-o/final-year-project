@@ -37,78 +37,21 @@
     </tr>
     </thead>
     <tbody class="text-xs">
+      {% for announcement in announcements  %}
       <tr class="border-b ">
-        <td class="py-3 px-2 ">Perle de vie concert</td>
-        <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci ipsam dolore quidem facilis iusto? Velit saepe numquam vero consectetur quod laboriosam maxime? Dolorum earum quis, soluta nulla impedit corporis voluptates?</td>
-        <td>July 08, 2023</td>
+        <td class="py-3 px-2 ">{{announcement.title}}</td>
+        <td>{{announcement.description}}</td>
+        <td>{{announcement.due_date}}</td>
         <td>
           <div class="flex gap-x-4 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
+            <a href='{% url 'update-announcement' announcement.id %}'><i class="fa-solid fa-pen-to-square text-md"></i></a>
+            <a href='{% url 'del-announcement' announcement.id %}' ><i class="fa-solid fa-trash-can text-md text-red-500"></i></a>
           </div>
         </td>
         
       </tr>
-      <tr class="border-b ">
-        <td class="py-3 px-2 ">Perle de vie concert</td>
-        <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci ipsam dolore quidem facilis iusto? Velit saepe numquam vero consectetur quod laboriosam maxime? Dolorum earum quis, soluta nulla impedit corporis voluptates?</td>
-        <td>July 08, 2023</td>
-        <td>
-          <div class="flex gap-x-4 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
-          </div>
-        </td>
-        
-      </tr>
-      <tr class="border-b ">
-        <td class="py-3 px-2 ">Perle de vie concert</td>
-        <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci ipsam dolore quidem facilis iusto? Velit saepe numquam vero consectetur quod laboriosam maxime? Dolorum earum quis, soluta nulla impedit corporis voluptates?</td>
-        <td>July 08, 2023</td>
-        <td>
-          <div class="flex gap-x-4 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
-          </div>
-        </td>
-        
-      </tr>
-      <tr class="border-b ">
-        <td class="py-3 px-2 ">Perle de vie concert</td>
-        <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci ipsam dolore quidem facilis iusto? Velit saepe numquam vero consectetur quod laboriosam maxime? Dolorum earum quis, soluta nulla impedit corporis voluptates?</td>
-        <td>July 08, 2023</td>
-        <td>
-          <div class="flex gap-x-4 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
-          </div>
-        </td>
-        
-      </tr>
-      <tr class="border-b ">
-        <td class="py-3 px-2 ">Perle de vie concert</td>
-        <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci ipsam dolore quidem facilis iusto? Velit saepe numquam vero consectetur quod laboriosam maxime? Dolorum earum quis, soluta nulla impedit corporis voluptates?</td>
-        <td>July 08, 2023</td>
-        <td>
-          <div class="flex gap-x-4 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
-          </div>
-        </td>
-        
-      </tr>
-      <tr class="border-b ">
-        <td class="py-3 px-2 ">Perle de vie concert</td>
-        <td>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci ipsam dolore quidem facilis iusto? Velit saepe numquam vero consectetur quod laboriosam maxime? Dolorum earum quis, soluta nulla impedit corporis voluptates?</td>
-        <td>July 08, 2023</td>
-        <td>
-          <div class="flex gap-x-4 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
-          </div>
-        </td>
-        
-      </tr>
+      {% endfor %}
+   
     </tbody>
   </table>
  </div>

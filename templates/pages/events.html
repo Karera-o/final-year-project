@@ -65,7 +65,7 @@
  <div class="w-full flex flex-col gap-y-2 ">
   <div class="flex gap-x-6">
     <h1 class="text-xl font-bold">Events</h1>
-    <a href="/addEvent.html" class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Add New</a>
+    <a href="{% url 'add-event' %}" class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Add New</a>
     <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Events (Excel)</a>
     <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Events (PDF)</a>
   </div>
@@ -84,96 +84,23 @@
     </tr>
     </thead>
     <tbody class="text-xs">
+      {% for event in events %}
       <tr class="border-b ">
-        <td class="py-3 px-2 ">Mifem Camp</td>
-        <td>Murekatete Joyeuse</td>
-        <td>+250789393939</td>
-        <td>July 02, 2023</td>
-        <td>July 08, 2023</td>
-        <td class="text-green-400 font-bold">Completed</td>
+        <td class="py-3 px-2 ">{{event.title}}</td>
+        <td>{{event.department}}</td>
+        <td>{{event.budget}}</td>
+        <td>{{event.due_date}}</td>
+        <td>{{event.end_date}}</td>
+        <td class="text-green-400 font-bold">{{event.status}}</td>
         <td>
           <div class="flex gap-x-4 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
+            <a href='{% url 'update-event' event.id %}'><i class="fa-solid fa-pen-to-square text-md"></i></a>
+            <a href='{% url 'del-event' event.id %}' ><i class="fa-solid fa-trash-can text-md text-red-500"></i></a>
           </div>
         </td>
         
       </tr>
-      <tr class="border-b ">
-        <td class="py-3 px-2 ">Mifem Camp</td>
-        <td>Murekatete Joyeuse</td>
-        <td>+250789393939</td>
-        <td>July 02, 2023</td>
-        <td>July 08, 2023</td>
-        <td class="text-green-400 font-bold">Completed</td>
-        <td>
-          <div class="flex gap-x-3 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
-          </div>
-        </td>
-        
-      </tr>
-      <tr class="border-b ">
-        <td class="py-3 px-2 ">Mifem Camp</td>
-        <td>Murekatete Joyeuse</td>
-        <td>+250789393939</td>
-        <td>July 02, 2023</td>
-        <td>July 08, 2023</td>
-        <td class="text-blue-400 font-bold">Pending</td>
-        <td>
-          <div class="flex gap-x-3 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
-          </div>
-        </td>
-        
-      </tr>
-      <tr class="border-b ">
-        <td class="py-3 px-2 ">Mifem Camp</td>
-        <td>Murekatete Joyeuse</td>
-        <td>+250789393939</td>
-        <td>July 02, 2023</td>
-        <td>July 08, 2023</td>
-        <td class="text-green-400 font-bold">Completed</td>
-        <td>
-          <div class="flex gap-x-3 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
-          </div>
-        </td>
-        
-      </tr>
-      <tr class="border-b ">
-        <td class="py-3 px-2 ">Mifem Camp</td>
-        <td>Murekatete Joyeuse</td>
-        <td>+250789393939</td>
-        <td>July 02, 2023</td>
-        <td>July 08, 2023</td>
-        <td class="text-green-400 font-bold">Completed</td>
-        <td>
-          <div class="flex gap-x-3 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
-          </div>
-        </td>
-        
-      </tr>
-      <tr class="border-b ">
-        <td class="py-3 px-2 ">Mifem Camp</td>
-        <td>Murekatete Joyeuse</td>
-        <td>+250789393939</td>
-        <td>July 02, 2023</td>
-        <td>July 08, 2023</td>
-        <td class="text-red-400 font-bold">Cancelled</td>
-        <td>
-          <div class="flex gap-x-3 w-1/2 justify-center">
-            <i class="fa-solid fa-pen-to-square text-md"></i>
-            <i class="fa-solid fa-trash-can text-md text-red-500"></i>
-          </div>
-        </td>
-        
-      </tr>
+      {% endfor %}
     </tbody>
   </table>
  </div>
