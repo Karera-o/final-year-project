@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 
 class SignupForm(UserCreationForm):
     # email = forms.EmailField(required=True)
-    first_name = forms.CharField(required=True)
-    last_name = forms.CharField(required=True)
+    # first_name = forms.CharField(required=True)
+    # last_name = forms.CharField(required=True)
     def save(self, commit=True):
         user = super().save(commit=False)
         user.username = self.cleaned_data['email']
