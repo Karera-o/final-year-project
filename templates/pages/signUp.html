@@ -37,12 +37,12 @@
                     </div>
                     <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
                         <img src="{% static 'Images/icons/password.svg' %}" alt="" class="w-4">
-                        <input type="{{form.password1.field.widget.input_type}}" placeholder="password123" class="w-full outline-none" name='{{form.password1.html_name}}'>
+                        <input type="password" placeholder="Password" class="w-full outline-none" name='{{form.password1.html_name}}'>
                         {% comment %} {{form.password1}} {% endcomment %}
                     </div>
                     <div class="flex items-center rounded-md gap-2  shadow-lg shadow-blue-50 px-2 py-2 border border-[#E0E6F0]">
                         <img src="{% static 'Images/icons/password.svg' %}" alt="" class="w-4">
-                        <input type="{{form.password2.field.widget.input_type}}" placeholder="password123" class="w-full outline-none" name='{{form.password2.html_name}}'>
+                        <input type="password" placeholder="Confirm Password" class="w-full outline-none" name='{{form.password2.html_name}}'>
                         {% comment %} {{form.password2}} {% endcomment %}
                     </div>
                     
