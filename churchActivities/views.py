@@ -9,16 +9,12 @@ def signUp(request):
     pageTitle = 'SignUp'
 
     if request.method == 'POST':
-        print('received')
       
         form = SignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            password = form.cleaned_data['password1']
-            user = authenticate(request, username=user.username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('dashboard')
+            login(request, user)
+            return redirect('dashboard')
         else:
             print(form.errors)
 
@@ -34,35 +30,28 @@ def signUp(request):
 
 #Signin Page
 def signIn(request):
-    print('signin')
+    
     if request.method == 'POST':
-        print('received')
-        form = SigninForm(request, data=request.POST)
-        if form.is_valid():
-            print('valid')
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = authenticate(request, email=email, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('dashboard')  
-            else:
-                print('The user does not exit')
-                return render(request, 'pages/signIn.html', {'form': form, 'error': 'Invalid email or password.'})
+      
+        email = request.POST['email']
+        password = request.POST['password']
+        user = authenticate(request, username=email, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('dashboard')
         else:
-            print('error')
-            print(form.errors)
+            print('The user does not exit')
+            return render(request, 'pages/signIn.html', {'error': 'Invalid email or password.'})
+        
     else:
-        form = SigninForm()
-    return render(request, 'pages/signIn.html', {'form': form})
+        
+        pass
+    return render(request, 'pages/signIn.html')
 
 #Signout 
 def signout(request):
     logout(request)
-    return redirect('home')  # Replace 'home' with the name of your home view
-
-    
-    return render(request, 'pages/index.html')
+    return redirect('signin')  
 
 #User dashboard
 def userDashboard(request):
