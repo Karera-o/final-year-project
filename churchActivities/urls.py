@@ -20,4 +20,5 @@ urlpatterns = [
     path('update-activity/<int:id>',views.updateActivity, name='update-activity'),
     path('del-announcement/<int:id>',views.deletingAnnouncement, name='del-announcement'),
     path('update-announcement/<int:id>',views.updateAnnouncement, name='update-announcement'),
+    path('download/',views.html_to_pdf_view.as_view(),name='download')
 ]
