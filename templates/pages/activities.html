@@ -1,0 +1,110 @@
+
+<div class="content px-8 py-6 flex flex-col gap-y-12 w-full">
+  <div class="flex flex-col gap-y-4">
+    <div class="flex justify-between">
+      <h1 class="font-extrabold text-2xl">Activities</h1>
+      <div class="flex gap-x-3 ">
+        <div class="flex gap-x-3 items-center rounded-md border border-1 bg-primary text-white px-3 ">
+          <p>Report</p>
+          <i class="fa-solid fa-download"></i>
+        </div>
+        <select name="" id="" class="outline-none px-4 rounded-md ">
+          <option value="" class="border-none">2023</option>
+          <option value="">2022</option>
+          <option value="">2021</option>
+          <option value="">2020</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex justify-between">
+      <div class="flex w-full gap-x-5">
+        <div class="flex gap-x-3 w-full bg-white border border-gray-300 border-2 text-primary py-4 px-5 shadow-md rounded-md">
+          <span class="p-3 bg-primary text-white rounded-md">
+            <i class="fa-regular fa-calendar-check"></i>
+          </span>
+          <div >
+            <p class="text-primary opacity-50">All Activities</p>
+            <p class="">98</p>
+          </div>
+        </div>
+        <div class="flex gap-x-3 w-full bg-white py-4 px-5 shadow-md rounded-md">
+          <span class="p-3 bg-green-400 text-white rounded-md">
+            <i class="fa-solid fa-check-double"></i>
+          </span>
+          <div >
+            <p class="text-primary opacity-50">Completed</p>
+            <p class="">98</p>
+          </div>
+        </div>
+        <div class="flex gap-x-3 w-full bg-white py-4 px-5 shadow-md rounded-md">
+          <span class="p-3 bg-blue-400 text-white rounded-md">
+            <i class="fa-solid fa-spinner"></i>
+          </span>
+          <div >
+            <p class="text-primary opacity-50">Pending</p>
+            <p class="">98</p>
+          </div>
+        </div>
+        <div class="flex gap-x-3 w-full bg-white py-4 px-5 shadow-md rounded-md">
+          <span class="p-3 bg-red-400 text-white rounded-md">
+            <i class="fa-solid fa-xmark"></i>
+          </span>
+          <div >
+            <p class="text-primary opacity-50">Cancelled</p>
+            <p class="">98</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col items-end text-sm text-gray-400">
+        
+      </div>
+    </div>
+  </div>
+
+ <div class="w-full flex flex-col gap-y-2 ">
+  <div class="flex gap-x-6">
+    <h1 class="text-xl font-bold">Activities</h1>
+    <a hx-get='{% url 'add-activity' %}' hx-target='.content' hx-swap='outerHTML' class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Add New</a>
+    <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Activities (Excel)</a>
+    <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Activities (PDF)</a>
+  </div>
+
+  <table class="table-fixed  bg-white rounded-md shadow-lg w-full">
+   
+    <thead class="border-b text-left">
+      <tr class=" ">
+      <th class="py-3 px-2 ">Activity Name</th>
+      <th>Event</th>
+      <th>Due Date</th>
+      <th>End Date</th>
+      <th>Status</th>
+      <th>Operation</th>
+    </tr>
+    </thead>
+    <tbody class="text-xs">
+      {% for activity in activities %}
+      
+      <tr class="border-b ">
+        <td class="py-3 px-2 ">{{activity.title}}</td>
+        <td>{{activity.event}}</td>
+        <td>{{activity.due_date}}</td>
+        <td>{{activity.end_date}}</td>
+      
+        <td class="text-green-400 font-bold">{{activity.status}}</td>
+        <td>
+          <div class="flex gap-x-4 w-1/2 justify-center">
+            <a href='{% url 'update-activity' activity.id %}'><i class="fa-solid fa-pen-to-square text-md"></i></a>
+            <a href='{% url 'del-activity' activity.id %}' ><i class="fa-solid fa-trash-can text-md text-red-500"></i></a>
+          </div>
+        </td>
+        
+      </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+ </div>
+</div>
+
+
