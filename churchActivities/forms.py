@@ -53,5 +53,10 @@ class AnnouncementForm(ModelForm):
         )
    
 
-    
+from django.contrib.auth.models import User, Group
+
+class AssignGroupForm(forms.Form):
+    user = forms.ModelChoiceField(queryset=Member.objects.all())
+    group = forms.ModelChoiceField(queryset=Group.objects.all())
+ 
 

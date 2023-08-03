@@ -12,10 +12,16 @@ class Department(models.Model):
         return self.name
 
 class Member(AbstractUser):
+    MEMBER_STATUS = [
+        ('Regular Member','Regular Member'),
+        ('Visitor','Visitor'),
+    ]
+
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(primary_key=True, unique=True)
     phone = models.CharField(max_length=10)
+    status = models.CharField(max_length=255, choices=MEMBER_STATUS)
     password = models.CharField(max_length=100)
     username = models.EmailField(unique=True)
 

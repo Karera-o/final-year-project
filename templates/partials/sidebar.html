@@ -44,6 +44,15 @@
         <p class="hide">Announcements</p>
       </a>
       </li>
+
+      <li  class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
+
+        <a hx-get='{% url 'assign-group' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+        <i class="material-icons">people</i>
+      <p class="hide">Groups
+      </p>
+      </a>
+    </li>
       <li class=" w-full hover:bg-purple-200 hover:text-primary cursor-pointer">
         <a hx-get='{% url 'logs' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-2  py-4 px-5 h-full w-full">
         <i class="fa-solid fa-chart-line"></i>

@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import *
 from .models import *
-
+from .decorators import *
+from django.contrib.auth.decorators import login_required
 
 #Signup
 def signUp(request):
@@ -14,7 +15,14 @@ def signUp(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('dashboard')
+            if user.groups.filter(name='admin').exists():
+                return redirect('dashboard')
+            elif user.groups.filter(name='HOD').exists():
+                return redirect('hod-dashboard')
+            elif user.groups.filter(name='church_board').exists():
+                return redirect('dashboard')
+            else:
+                return redirect('user-dashboard')
         else:
             print(form.errors)
 
@@ -38,7 +46,16 @@ def signIn(request):
         user = authenticate(request, username=email, password=password)
         if user is not None:
             login(request, user)
-            return redirect('dashboard')
+
+            if user.groups.filter(name='admin').exists():
+                return redirect('dashboard')
+            elif user.groups.filter(name='HOD').exists():
+                return redirect('hod-dashboard')
+            elif user.groups.filter(name='church_board').exists():
+                return redirect('dashboard')
+            else:
+                return redirect('user-dashboard')
+            
         else:
             print('The user does not exit')
             return render(request, 'pages/signIn.html', {'error': 'Invalid email or password.'})
@@ -49,29 +66,74 @@ def signIn(request):
     return render(request, 'pages/signIn.html')
 
 #Signout 
+@login_required
 def signout(request):
     logout(request)
     return redirect('signin')  
 
 #User dashboard
+# @login_required
 def userDashboard(request):
     
-    return render(request, 'pages/index.html')
+    user = request.user
+
+    print(user)
+
+    context={
+        'user':user,
+    }
+    if request.headers.get('HX-Request'):
+        return render(request, 'pages/index-template.html',context)
+    
+    return render(request, 'pages/index.html',context)
 
 #Admin dashboard
+@is_admin
 def adminDashboard(request):
 
-    if request.headers.get('HX-Request'):
-        return render(request, 'pages/index-template.html')
-    
-    return render(request, 'pages/index.html')
+    user = request.user
 
-#Members page
-def members(request):
+    # print(user.first_name)
+    # print(user.firstname)
+    print(user)
+
+    context={
+        'user':user,
+    }
+    if request.headers.get('HX-Request'):
+        return render(request, 'pages/index-template.html',context)
     
-    return render(request, 'pages/members.html')
+    return render(request, 'pages/index.html',context)
+
+#User dashboard
+def hodDashboard(request):
+    
+    user = request.user
+
+    print(user)
+
+    context={
+        'user':user,
+    }
+    if request.headers.get('HX-Request'):
+        return render(request, 'pages/index-template.html',context)
+    
+    return render(request, 'pages/index.html',context)
+#Members page
+
+def members(request):
+
+    members = Member.objects.all()
+
+    context = {
+        
+       'members':members,
+    }
+    
+    return render(request, 'pages/members.html',context)
 
 #Events Page
+@login_required
 def events(request):
     
     events = Event.objects.all()
@@ -83,6 +145,7 @@ def events(request):
     return render(request, 'pages/events.html',context)
 
 #Activities Page
+@login_required
 def activities(request):
     
     activities = Activity.objects.all()
@@ -94,6 +157,7 @@ def activities(request):
     return render(request, 'pages/activities.html',context)
 
 #Announcements Page
+@login_required
 def announcements(request):
     
     announcements = Announcement.objects.all()
@@ -108,30 +172,38 @@ def announcements(request):
 def logs(request):
     
     return render(request, 'pages/logs.html')
-
+@is_hod
 def addEvent(request):
     
     departments = Department.objects.all()
     form = EventForm()
+    print('In event 1')
+    print('In event 2')
+    if request.headers.get('HX-Request'):
+        print('hx')
     if request.method == 'POST':
+        print('Data are received')
         form = EventForm(request.POST)
         
         if form.is_valid():
+            print('Data are valid')
             form.save()
             return redirect('events')
         else:
             print(form.errors)
+            print('Errors')
         
     else:
         form = EventForm()
-        
+        print('Data are not received')
     context={
         'form':form,
         'departments':departments
     }
         
     return render(request, 'pages/add-event.html',context)
-
+    # return render(request, 'pages/signUp.html',context)
+@is_hod
 def addActivity(request):
     
     events = Event.objects.all()
@@ -155,6 +227,7 @@ def addActivity(request):
         
     return render(request, 'pages/add-activity.html',context)
 
+@is_hod
 def addAnnouncement(request):
     
 
@@ -177,7 +250,7 @@ def addAnnouncement(request):
         
     return render(request, 'pages/add-announcement.html',context)
         
-    
+@is_hod   
 def deletingEvent(request,id):
     
     try:
@@ -187,8 +260,8 @@ def deletingEvent(request,id):
     except Exception:
         print('Error')
         
-    return redirect('dashboard')
-
+    return redirect('events')
+@is_hod
 def updateEvent(request,id):
     
     try:
@@ -208,7 +281,7 @@ def updateEvent(request,id):
     except Exception:
         print('Error')
         
-
+@is_hod
 def deletingActivity(request,id):
     
     try:
@@ -219,7 +292,7 @@ def deletingActivity(request,id):
         print('Error')
         
     return redirect('dashboard')
-
+@is_hod
 def updateActivity(request,id):
     
     try:
@@ -239,7 +312,7 @@ def updateActivity(request,id):
     except Exception:
         print('Error')
         return redirect('dashboard')
-        
+@is_hod        
 def deletingAnnouncement(request,id):
     
     try:
@@ -251,7 +324,7 @@ def deletingAnnouncement(request,id):
         
     return redirect('dashboard')
 
-
+@is_hod
 def updateAnnouncement(request,id):
     
     try:
@@ -272,7 +345,28 @@ def updateAnnouncement(request,id):
         print('Error')
         return redirect('dashboard')
 
+@is_admin
+def assignGroup(request):
 
+    
+    if request.method == 'POST':
+        form = AssignGroupForm(request.POST)
+        if form.is_valid():
+            user = form.cleaned_data['user']
+            group = form.cleaned_data['group']
+            user.groups.add(group)
+            return redirect('dashboard') 
+
+        else:
+            print(form.errors) 
+    else:
+        
+        form = AssignGroupForm()
+    context={
+        'form':form,
+        
+    }
+    return render(request, 'pages/assign-group.html',context)
  
 from django.http import HttpResponse
 from django.views.generic import View
