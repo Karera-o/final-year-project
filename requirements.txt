@@ -22,6 +22,7 @@ pyhanko-certvalidator==0.23.0
 pypdf==3.12.1
 pypng==0.20220715.0
 python-bidi==0.4.2
+python-dotenv==1.0.0
 PyYAML==6.0
 qrcode==7.4.2
 reportlab==3.6.13
