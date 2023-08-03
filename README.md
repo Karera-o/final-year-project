@@ -1,3 +1,4 @@
+
 # Final year Project
 
 ### This project will help AUCA Church to keep track of its activities and to generate reports after the analysis of them.
@@ -13,3 +14,4 @@ Tools
   1. Visual studio code
   2. Git hub
   3. Figma
+
