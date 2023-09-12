@@ -1,5 +1,5 @@
 
-    <div class="content flex flex-col w-screen gap-y-3 bg-white lg:w-min border border-2 px-4 py-4">
+    <div class="content flex flex-col w-screen gap-y-3 bg-white lg:w-min border border-2 px-4 py-4 mt-6 shadow-lg rounded h-min">
         <h1 class="text-primary font-bold">Add An Activity</h1>
         <form method="post" hx-post='{% url 'add-activity' %}' hx-target='.content' hx-swap='outerHTML' class="w-full">
             {% csrf_token %}

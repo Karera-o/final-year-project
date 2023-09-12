@@ -1,13 +1,11 @@
 from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
-from .models import Member,Event,Activity,Announcement
+from .models import *
 from django.contrib.auth.models import User
 
 class SignupForm(UserCreationForm):
-    # email = forms.EmailField(required=True)
-    # first_name = forms.CharField(required=True)
-    # last_name = forms.CharField(required=True)
+   
     def save(self, commit=True):
         user = super().save(commit=False)
         user.username = self.cleaned_data['email']
@@ -58,5 +56,32 @@ from django.contrib.auth.models import User, Group
 class AssignGroupForm(forms.Form):
     user = forms.ModelChoiceField(queryset=Member.objects.all())
     group = forms.ModelChoiceField(queryset=Group.objects.all())
+    department = forms.ModelChoiceField(queryset=Department.objects.all(),required=False)
  
+class TitheForm(ModelForm):
+    
+    class Meta:
+        model=TitheOffering
+        fields =('offering_type','sabbath','returned','quarter','returner')
+    offering_type = forms.ChoiceField(choices=TitheOffering.OFFERING_TYPE) 
+    sabbath = forms.ChoiceField(choices=TitheOffering.SABBATH_CHOICE)
+    quarter = forms.ChoiceField(choices=TitheOffering.QUARTER_CHOICE)
 
+class DonationForm(ModelForm):
+
+    member = forms.ModelChoiceField(queryset=None,required=False,blank=True)
+    department = forms.ModelChoiceField(queryset=Department.objects.all())
+    donation_type = forms.ChoiceField(choices=Payment.DONATION_CHOICES)
+    # amount = forms.DecimalField(max_digits=10, decimal_places=2)
+
+       
+    class Meta:
+         model=Payment
+         fields = ['donation_type', 'department', 'amount_given']
+
+
+class BudgetForm(ModelForm):
+
+    class Meta:
+        model = Budget
+        fields = ['department','amount_from_church','amount_from_members','start_date','end_date',]

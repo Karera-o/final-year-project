@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Activities Report</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+          }
+          
+          .container {
+            color: #00295B;
+            width: 70%;
+            margin: 3rem auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5rem;
+          }
+          .container .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .container .header div img {
+            width: 100px;
+          }
+          .container .header div p {
+            text-align: left;
+            font-size: 16px;
+            font-weight: bolder;
+          }
+          .container .header p {
+            text-align: right;
+            font-size: 12px;
+            
+          }
+          .container .table {
+            display: flex;
+            flex-direction: column;
+            /* gap: 2rem; */
+            align-items: center;
+            width: 100%;
+          }
+          .container .table h1 {
+            font-size: 20px;
+            text-align: center;
+          }
+          .container .table table {
+            background-color: white;
+            box-shadow: 10px 10px 10px rgb(233, 241, 244);
+            width: 100%;
+            border-radius: 5px;
+          }
+          .container .table table thead {
+            border-bottom: 1px solid;
+            text-align: left;
+          }
+          .container .table table thead th {
+            padding: 3px 2px;
+            background-color: #00295B;
+            color: white;
+            padding: .6rem;
+          }
+          .container .table table tbody {
+            font-size: smaller;
+          }
+          .container .table table tbody tr {
+            border-bottom: 1px solid;
+          }
+          .container .table table tbody tr td {
+            padding: 1rem;
+            border-bottom: 1px solid rgb(213, 213, 213);
+            text-align: center;
+          }
+          .prepared{
+            text-align: center;
+          }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="header">
+            <div>
+                <img src="{{image}}" alt="">
+                <p>AUCA Church</p>
+            </div>
+            <p>Done on {{date}}</p>
+        </div>
+        <div class="table">
+            <h1>{{department}} Annual budget Report</h1>
+            <table>
+                <thead>
+                  <tr >
+                    <th>Department</th>
+                    <th>Amount From Church</th>
+                    <th>Amount From Members</th>
+                    <th>Amount Given</th>
+                    <th>Start Date </th>
+                    <th>End Date </th>
+                   
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {% for budget, total in budgets.items  %}
+                  <tr >
+                    <td >{{budget.department}}</td>
+                    <td>{{budget.amount_from_church}}</td>
+                    <td>{{budget.amount_from_members}}</td>
+                    {% comment %} {% if budget.department == payment.department %} {% endcomment %}
+                    <td>{{total}}</td>
+                   
+
+                    <td>{{budget.start_date}}</td>
+                    <td>{{budget.end_date}}</td>
+                   
+                  </tr>
+                  {% endfor %}
+
+                  <tr>
+                    <td>Total</td>
+                    <td>{{churchTotal}}</td>
+                    <td>{{membersTotal}}</td>
+                    <td>{{donationTotal}}</td>
+                  </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+       <br>
+       <br>
+       <br><br><br>
+
+        <p class="prepared">Prepared by .......................</p>
+    </div>
+    
+</body>
+</html>

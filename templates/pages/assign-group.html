@@ -1,5 +1,5 @@
 
-    <div class="content flex flex-col w-screen gap-y-3 bg-white lg:w-min border border-2 px-4 py-4">
+    <div class="content flex flex-col w-screen gap-y-3 bg-white lg:w-min border border-2 px-4 py-4 mt-6 shadow-lg rounded h-min">
         <h1 class="text-primary font-bold">Assign Group</h1>
         <form method="post" hx-post='{% url 'assign-group' %}' hx-target='.content' hx-swap='outerHTML' class="w-full">
             {% csrf_token %}
@@ -18,18 +18,27 @@
                             </select>
                             
                        </div>
-                       <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
+                       <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]" >
                             
-                        <select name="group" class="w-full outline-none">
+                        <select name="group" class="w-full outline-none" id='hod'>
                             {% for choice in form.group.field.choices %}
                                 <option value="{{ choice.0 }}">{{ choice.1 }}</option>
                                 
                             {% endfor %}
                         </select>
                         
-                       
-
                    </div>
+                   <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0] " id='department'>
+                            
+                    <select name="department" class="w-full outline-none" required='false' >
+                        
+                        {% for choice in form.department.field.choices %}
+                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                            
+                        {% endfor %}
+                    </select>
+                    
+               </div>
                         
                         
                         
@@ -44,3 +53,25 @@
             </div>
         </form>
     </div>
+
+    {% comment %} <script>
+        $(document).ready(function () {
+            // Function to show/hide the conditional input based on the answer
+            $('#department').hide();
+            function toggleConditionalInput(selectElement, conditionalDiv) {
+                selectElement.on('change', function () {
+                    
+                    console.log(selectElement.val())
+                    if (selectElement.val() == 5) {
+                        conditionalDiv.show();
+                    } else {
+                        conditionalDiv.hide();
+                    }
+                });
+            }
+    
+            // Attach event listeners to the select elements
+            toggleConditionalInput($('#hod'), $('#department'));
+            
+        });
+    </script> {% endcomment %}

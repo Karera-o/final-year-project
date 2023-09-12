@@ -6,11 +6,20 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 class Department(models.Model):
     name = models.CharField(max_length=100)
-    hod = models.ForeignKey('Member', on_delete=models.SET_NULL, null=True)
+    
     
     def __str__(self):
         return self.name
 
+class DepartmentHOD(models.Model):
+    department = models.ForeignKey(Department,on_delete=models.SET_NULL,null=True,unique=True)
+    hod = models.ForeignKey('Member', on_delete=models.SET_NULL, null=True)
+
+    def __str__(self) -> str:
+
+        # return self.hod.first_name + ' ' + self.hod.last_name
+        return self.department.name
+    
 class Member(AbstractUser):
     MEMBER_STATUS = [
         ('Regular Member','Regular Member'),
@@ -28,7 +37,7 @@ class Member(AbstractUser):
     
 
     def __str__(self):
-        return self.username
+        return self.first_name + ' ' + self.last_name
 
 
 class Event(models.Model):
@@ -92,5 +101,67 @@ class ChurchBoard(models.Model):
     
     def __str__(self):
         return self.Member.first_name + ' '+ self.Member.last_name
+    
 
 
+class TitheOffering(models.Model):
+    
+    OFFERING_TYPE = (
+        ('Tithe', 'Tithe'),
+        ('Offerings', 'Offerings'),
+        ('Umusaruro', 'Umusaruro'),
+        ('Inyubako', 'Inyubako'),
+        ('Iteraniro Rikuru', 'Iteraniro Rikuru'),
+    )
+    SABBATH_CHOICE = (
+        ('First Sabbath', 'First Sabbath'),
+        ('Second Sabbath', 'Second Sabbath'),
+        ('Third Sabbath', 'Third Sabbath'),
+        ('Forth Sabbath', 'Forth Sabbath'),
+        ('Fifth Sabbath', 'Fifth Sabbath'),
+    )
+
+    QUARTER_CHOICE = (
+        ('First Quarter', 'First Quarter'),
+        ('Second Quarter', 'Second Quarter'),
+        ('Third Quarter', 'Third Quarter'),
+        ('Forth Quarter', 'Forth Quarter'),
+    )
+
+    offering_type = models.CharField(max_length=50, choices=OFFERING_TYPE)
+    sabbath = models.CharField(max_length=50, choices=SABBATH_CHOICE)
+    quarter = models.CharField(max_length=60, choices=QUARTER_CHOICE)
+    returned = models.FloatField()
+    date = models.DateField(auto_now=True)
+    returner = models.IntegerField()
+
+class Payment(models.Model):
+    DONATION_CHOICES = (
+        ('Tithe', 'Tithe'),
+    ('Offerings', 'Offerings'),
+    ('Umusaruro', 'Umusaruro'),
+    ('Inyubako', 'Inyubako'),
+    ('Iteraniro Rikuru', 'Iteraniro Rikuru'),
+    ('Donation', 'Donation'),
+    )
+    member = models.ForeignKey(Member, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department,on_delete=models.CASCADE)
+    donation_type = models.CharField(max_length=100, choices=DONATION_CHOICES)
+    amount_given = models.FloatField()
+    date_created = models.DateField(auto_now=True)
+
+    def __str__(self) -> str:
+        return self.member.first_name + " " + self.member.last_name
+    
+
+class Budget(models.Model):
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    amount_from_church = models.FloatField()
+    amount_from_members = models.FloatField()
+    start_date = models.DateField()
+    end_date = models.DateField()
+    date_created = models.DateField(auto_now=True)
+    
+    
+    def __str__(self):
+        return self.department.name

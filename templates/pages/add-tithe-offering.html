@@ -1,0 +1,67 @@
+
+<div class="content flex flex-col w-screen gap-y-3 bg-white lg:w-min border border-2 px-4 py-4 px-4 py-4 mt-6 shadow-lg rounded h-min">
+    <h1 class="text-primary font-bold">Add An Tithe & Offerings</h1>
+    <form method="post" hx-post='{% url 'add-tithe' %}' hx-target='.content' hx-swap='outerHTML' class="w-full">
+        {% csrf_token %}
+        <div class="flex flex-col lg:flex-row gap-x-3 gap-y-3 w-full lg:w-max">
+            <div class="w-full lg:w-96 flex flex-col gap-5 items-center ">
+                <div class="flex flex-col gap-y-5 w-full">
+                    
+                    <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
+                        
+                        {% comment %} <input type="text" placeholder="Pending" class="w-full outline-none" name='status'>  {% endcomment %}
+
+                        <select name="offering_type" class="w-full outline-none">
+                            {% for choice in form.offering_type.field.choices %}
+                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                            {% endfor %}
+                        </select>
+                        
+                   </div>
+                   <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
+                        
+                    {% comment %} <input type="text" placeholder="Pending" class="w-full outline-none" name='status'>  {% endcomment %}
+
+                    <select name="sabbath" class="w-full outline-none">
+                        {% for choice in form.sabbath.field.choices %}
+                            <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                    
+               </div>
+
+               <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
+                        
+                {% comment %} <input type="text" placeholder="Pending" class="w-full outline-none" name='status'>  {% endcomment %}
+
+                <select name="quarter" class="w-full outline-none">
+                    {% for choice in form.quarter.field.choices %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                    {% endfor %}
+                </select>
+                
+           </div>
+
+               <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
+                       
+                <input type="text" placeholder="Returned" class="input" name='returned'> 
+               
+           </div>
+                    <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
+                        
+                         <input type="number" placeholder="Abatanze" class="w-full outline-none" name='returner'> 
+                       
+                    </div>
+                    
+                    
+                </div>
+                
+        </div>
+        <button class="w-min bg-primary text-white px-5 self-end py-2 rounded-md" type="submit" >
+            Add 
+        </button>
+            
+           
+        </div>
+    </form>
+</div>

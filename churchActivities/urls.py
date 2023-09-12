@@ -11,6 +11,8 @@ urlpatterns = [
     path('members/',views.members,name='members'),
     path('events/',views.events,name='events'),
     path('activities/',views.activities,name='activities'),
+    path('tithe/',views.titheOfferings,name='tithe'),
+    path('add-tithe/',views.addTitheOfferings,name='add-tithe'),
     path('logs/',views.logs, name='logs'),
     path('announcements/',views.announcements,name='announcements'),
     path('add-event/',views.addEvent,name='add-event'),
@@ -22,5 +24,25 @@ urlpatterns = [
     path('update-activity/<int:id>',views.updateActivity, name='update-activity'),
     path('del-announcement/<int:id>',views.deletingAnnouncement, name='del-announcement'),
     path('update-announcement/<int:id>',views.updateAnnouncement, name='update-announcement'),
-    path('download/',views.html_to_pdf_view.as_view(),name='download')
+    path('download/',views.html_to_pdf_view.as_view(),name='download'),
+    
+    path('email/',views.sendEmail,name='email'),
+
+    #Payment
+    path('payment/',views.payment,name='payment'),
+    path('payment-wave/',views.paymentFlutterWave,name='payment-wave'),
+    path('donation/<str:link>',views.redirectPayment,name='donation'),
+
+    #Budget
+    path('add-budget/',views.addBudget,name='add-budget'),
+    path('budget/',views.budget,name='budget'),
+
+    #Reports
+    path('budget-report/',views.BudgetReport.as_view(),name='budget-report'),
+    path('events-report/',views.EventReport.as_view(),name='events-report'),
+    path('activity-report/',views.ActivityReport.as_view(),name='activity-report'),
+    path('donation-report/',views.DonationReport.as_view(),name='donation-report'),
+    path('paypack/',views.paypack,name='paypack'),
+
+    
 ]

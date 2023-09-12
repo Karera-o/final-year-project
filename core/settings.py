@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-r6ri(04#zzrr_sr!6+ak9f8aad)-q_jw(8rmn*#65%1-@x^!m&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app','localhost', '*']
 
 
 # Application definition
@@ -41,8 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'churchActivities',
+    'djangoflutterwave',
     
-     "django_browser_reload",
+    #  "django_browser_reload",
+    #  'rest_framework',
+
 ]
 
 MIDDLEWARE = [
@@ -54,10 +57,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
-    "django_browser_reload.middleware.BrowserReloadMiddleware",
+    # "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'core.urls'
+# SECURE_REFERRER_POLICY = None
+# ALLOW_HTTP_REFERERS = True
 
 TEMPLATES = [
     {
@@ -82,26 +87,26 @@ WSGI_APPLICATION = 'core.wsgi.app'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-DATABASES ={}
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'URL': os.environ.get('POSTGRES_URL'),
-        'NAME': os.environ.get('PGNAME'),
-        'USER': os.environ.get('PGUSER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('PGHOST'),
-        'PORT': os.environ.get('PGPORT'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'URL': os.environ.get('POSTGRES_URL'),
+#         'NAME': os.environ.get('PGNAME'),
+#         'USER': os.environ.get('PGUSER'),
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+#         'HOST': os.environ.get('PGHOST'),
+#         'PORT': os.environ.get('PGPORT'),
+#     }
+# }
 
 
 # Password validation
@@ -149,4 +154,17 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER = 'olivierkarera2020@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'jvcklltyxuahovyj'
+
+EMAIL_USE_TLS = True
+
+EMAIL_USE_SSL = False

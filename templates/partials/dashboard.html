@@ -12,6 +12,7 @@
     <script src="https://kit.fontawesome.com/863d396d0d.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/htmx.org@1.3.3"></script>
+    {% comment %} <script src="https://checkout.flutterwave.com/v3.js"></script> {% endcomment %}
     <title>{{pageTitle}}</title>
 
     <style type="text/tailwindcss">
@@ -20,6 +21,14 @@
             @apply w-full outline-none;
         }
         }
+    </style>
+
+    <style type="text/stylesheet">
+      .content{
+        display: none !important;
+        height: 100%;
+        overflow: hidden !important;
+      }
     </style>
 
     <script>
@@ -34,7 +43,7 @@
         }
       </script>
 </head>
-<body class="w-full bg-[#F4F7FE] flex h-screen text-primary">
+<body class="w-full bg-[#F4F7FE] flex h-screen text-primary overflow-hidden">
     {% include 'partials/sidebar.html' %}
     <!-- Container  -->
     <main class="main h-full w-full">
@@ -42,14 +51,21 @@
       {% include 'partials/header.html' %}
         <!-- </header> -->
         <!-- Content of the dashboard -->
-        {% block content %}
+        <div class='flex justify-center h-full'>
+          {% block content %}
 
         {% endblock content %}
+        </div>
+        
     </main>
 
     <script src="{% static 'js/main.js' %}">
 
     </script>
+
+    <script>
+
+     </script>
   
 </body>
 </html>

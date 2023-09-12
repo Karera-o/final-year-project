@@ -5,9 +5,11 @@
       <li class=" h-[10vh] w-full  font-extrabold cursor-pointer">
         <a hx-get='{% url 'dashboard' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-3 px-5 h-full w-full">
           <img src="{% static 'Images/adv_logo.svg' %}" alt="" class="w-8 ">
-          <p class="hide">AUCA_Church</p>
+          <p class="hide whitespace-nowrap">AUCA Church</p>
         </a>
       </li>
+      
+      {% if not isNotHod %}
       <li class="bg-white shadow-xl  w-full text-primary  cursor-pointer">
        
         <a hx-get='{% url 'dashboard' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
@@ -15,14 +17,21 @@
         <p href="index.html" class="hide">Dashboard</p>
       </a>
       </li>
-      <li  class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
+      {% if  isAdmin %}
 
-          <a hx-get='{% url 'members' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
-          <i class="material-icons">people</i>
-        <p class="hide">Members
-        </p>
-        </a>
-      </li>
+      <li  class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
+        
+        <a hx-get='{% url 'members' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+        <i class="material-icons">people</i>
+      <p class="hide">Members
+      </p>
+      </a>
+    </li>
+      
+      {% endif %}
+    
+          {% endif %}
+      
       <li class="w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
 
         <a hx-get='{% url 'events' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
@@ -39,11 +48,36 @@
       </li>
       <li class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
 
+        <a hx-get='{% url 'payment' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+        <i class="material-icons">local_activity</i>
+        <p class="hide">Donation</p>
+      </a>
+      </li>
+      {% if department.department.name == 'Finance' or  isAdmin%}
+      <li class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
+
+        <a hx-get='{% url 'tithe' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+          <i class="fa-solid fa-gifts"></i>
+        <p class="hide whitespace-nowrap">Tithe & Offerings</p>
+      </a>
+      </li>
+      {% endif %}
+      <li class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
+
+        <a hx-get='{% url 'budget' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
+        <i class="material-icons">announcement</i>
+        <p class="hide">Budget</p>
+      </a>
+      </li>
+      <li class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
+
         <a hx-get='{% url 'announcements' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
         <i class="material-icons">announcement</i>
         <p class="hide">Announcements</p>
       </a>
       </li>
+
+      {% if not isNotAdmin %}
 
       <li  class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
 
@@ -53,12 +87,17 @@
       </p>
       </a>
     </li>
-      <li class=" w-full hover:bg-purple-200 hover:text-primary cursor-pointer">
-        <a hx-get='{% url 'logs' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-2  py-4 px-5 h-full w-full">
-        <i class="fa-solid fa-chart-line"></i>
-        <p  class="hide">Logs</p>
-      </a>
-      </li>
+
+    {% comment %} <li class=" w-full hover:bg-purple-200 hover:text-primary cursor-pointer">
+      <a hx-get='{% url 'logs' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-2  py-4 px-5 h-full w-full">
+      <i class="fa-solid fa-chart-line"></i>
+      <p  class="hide">Logs</p>
+    </a>
+    </li> {% endcomment %}
+      
+      {% endif %}
+      
+     
    
     </ul>
     <div class="text-white ">

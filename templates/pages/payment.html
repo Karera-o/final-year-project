@@ -1,0 +1,119 @@
+
+<div class="content px-8 py-6 flex flex-col gap-y-12 w-full h-[90vh] overflow-scroll">
+    <div class="flex flex-col gap-y-4">
+      <div class="flex justify-between">
+        <h1 class="font-extrabold text-2xl">Donation</h1>
+        <div class="flex gap-x-3 ">
+          <a href='{% url 'donation-report' %}' target="_blank" class="flex gap-x-3 items-center rounded-md border border-1 bg-primary text-white px-3 ">
+            <p >Report</p>
+            <i class="fa-solid fa-download"></i>
+          </a>
+          
+          <select name="" id="" class="outline-none px-4 rounded-md ">
+            <option value="" class="border-none">2023</option>
+            <option value="">2022</option>
+            <option value="">2021</option>
+            <option value="">2020</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="flex justify-between">
+        <div class="flex w-full gap-x-5">
+          <div class="flex gap-x-3 w-full bg-white border border-gray-300 border-2 text-primary py-4 px-5 shadow-md rounded-md">
+            <span class="p-3 bg-primary text-white rounded-md">
+              <i class="fa-solid fa-gifts"></i>
+            </span>
+            <div >
+              <p class="text-primary opacity-50">Donations</p>
+              <p class="">32</p>
+            </div>
+          </div>
+          <div class="flex gap-x-3 w-full bg-white py-4 px-5 shadow-md rounded-md">
+            <span class="p-3 bg-green-400 text-white rounded-md">
+              <i class="fa-solid fa-gift"></i>
+            </span>
+            <div >
+              <p class="text-primary opacity-50">Donors</p>
+              <p class="">21</p>
+            </div>
+          </div>
+          <div class="flex gap-x-3 w-full bg-white py-4 px-5 shadow-md rounded-md">
+            <span class="p-3 bg-blue-400 text-white rounded-md">
+              <i class="fa-solid fa-plate-wheat"></i>
+              
+            </span>
+            <div >
+              <p class="text-primary opacity-50">Total</p>
+              <p class="">23</p>
+            </div>
+          </div>
+          <div class="flex gap-x-3 w-full bg-white py-4 px-5 shadow-md rounded-md">
+            <span class="p-3 bg-red-400 text-white rounded-md">
+              <i class="fa-solid fa-hands-holding"></i>
+            </span>
+            <div >
+              <p class="text-primary opacity-50">Total</p>
+              <p class="">13</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col items-end text-sm text-gray-400">
+          
+        </div>
+      </div>
+    </div>
+  
+   <div class="w-full flex flex-col gap-y-2 ">
+    <div class="flex gap-x-6">
+      <h1 class="text-xl font-bold">Donations</h1>
+      {% comment %} {% if not isNotHod %} {% endcomment %}
+      {% comment %} <form action="" hx-get='{% url 'payment-wave' %}' hx-target='.content' hx-swap='outerHTML'>
+        {% csrf_token %}
+        <button  class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Add New</button>
+      </form> {% endcomment %}
+      {% comment %} <a hx-get='{% url 'payment-wave' %}' hx-target='.content' hx-swap='outerHTML'  class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Add New</a> {% endcomment %}
+      <a hx-get='{% url 'payment-wave' %}' hx-target='.content' hx-swap='outerHTML'  class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Donate</a>
+      {% comment %} {% endif %} {% endcomment %}
+      {% comment %} <button type="button" onclick="makePayment()">Pay Now</button> {% endcomment %}
+      
+      <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export donation (Excel)</a>
+      <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Donation (PDF)</a>
+    </div>
+  
+    <table class="table-fixed  bg-white rounded-md shadow-lg w-full ">
+     
+      <thead class="border-b text-left">
+        <tr class=" ">
+        <th class="py-3 px-2 ">Member</th>
+        <th>Department</th>
+        <th>Contribution type</th>
+        <th>Amount Given</th>
+        <th>Date</th>
+        
+      </tr>
+      </thead>
+      <tbody class="text-xs">
+        {% for item in payments %}
+        
+        <tr class="border-b ">
+          <td class="py-3 px-2 ">{{item.member}}</td>
+          <td>{{item.department}}</td>
+          <td>{{item.donation_type}}</td>
+          <td>{{item.amount_given}}</td>
+          <td>{{item.date_created}}</td>
+          
+        </tr>
+        {% endfor %}
+  
+      </tbody>
+    </table>
+   </div>
+  </div>
+
+ 
+
+ 
+  
+  
+  

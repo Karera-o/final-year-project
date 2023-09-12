@@ -1,13 +1,13 @@
 {% extends 'partials/dashboard.html' %}
 
 {% block content %}
-<div class="content px-8 py-6 flex flex-col gap-y-12 w-full">
+<div class="content px-8 py-6 flex flex-col gap-y-12 w-full h-[90vh] overflow-scroll">
   <div class="flex flex-col gap-y-2">
     <div class="flex justify-between">
       <h1 class="font-extrabold text-2xl">Overview</h1>
 
       <div class="flex gap-x-3 ">
-        <a href='{% url 'download' %}' target="_blank" class="flex gap-x-3 items-center rounded-md border border-1 bg-primary text-white px-3 ">
+        <a href='{% url 'budget-report' %}' target="_blank" class="flex gap-x-3 items-center rounded-md border border-1 bg-primary text-white px-3 ">
           <p >Report</p>
           <i class="fa-solid fa-download"></i>
         </a>
@@ -25,7 +25,7 @@
       <div>
         <i class="material-icons">event_available</i>
       <h2>Events</h2>
-      <p>120</p>
+      <p>13</p>
       </div>
       <i class="fa-solid fa-bars-progress text-7xl opacity-30"></i>
     </div>
@@ -33,7 +33,7 @@
       <div>
         <i class="material-icons">event_available</i>
       <h2>Activities</h2>
-      <p>120</p>
+      <p>29</p>
       </div>
       <i class="fa-solid fa-bars-progress text-7xl opacity-30"></i>
     </div>
@@ -41,7 +41,7 @@
       <div>
         <i class="material-icons">event_available</i>
       <h2>Completed</h2>
-      <p>120</p>
+      <p>21</p>
       </div>
       <i class="fa-solid fa-bars-progress text-7xl opacity-30"></i>
     </div>
@@ -49,7 +49,7 @@
       <div>
         <i class="material-icons">event_available</i>
       <h2>Pending</h2>
-      <p>120</p>
+      <p>38</p>
       </div>
       <i class="fa-solid fa-bars-progress text-7xl opacity-30"></i>
     </div>

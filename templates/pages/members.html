@@ -1,6 +1,6 @@
 
 
-<div class="content px-8 py-6 flex flex-col gap-y-12 w-full">
+<div class="content px-8 py-6 flex flex-col gap-y-12 w-full h-[90vh] overflow-scroll">
           
   <div class="flex justify-between">
     <div class="bg-white flex px-3 gap-x-3 rounded-md shadow-lg text-sm w-min text-gray-400">
@@ -9,15 +9,18 @@
       <p class="hover:border-b-2 hover:text-primary border-primary py-2">ChurchBoard</p>
     </div>
     <div class="flex flex-col items-end text-sm text-gray-400">
-      <p>Total Members: <span class="text-primary">2000</span></p>
-      <p>Active Members: <span class="text-primary">1800</span></p>
+      <p>Total Members: <span class="text-primary">754</span></p>
+      <p>Active Members: <span class="text-primary">120</span></p>
     </div>
   </div>
 
  <div class="w-full flex flex-col gap-y-2 ">
   <div class="flex gap-x-6">
     <h1 class="text-xl font-bold">Members</h1>
+    {% if not isNotHod %}
     <a hx-get='{% url 'events' %}' hx-target='.content' hx-swap='outerHTML' class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Add New</a>
+      {% endif %}
+    
     <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Members (Excel)</a>
     <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Members (PDF)</a>
   </div>
@@ -31,7 +34,9 @@
       <th>Phone </th>
       <th>Email</th>
       <th>Status</th>
+      {% if not isNotHod %}
       <th>Operation</th>
+      {% endif %}
     </tr>
     </thead>
     <tbody class="text-xs">
@@ -42,12 +47,15 @@
         <td>{{member.phone}}</td>
         <td>{{member.email}}</td>
         <td class="text-green-400 font-bold">{{member.status}}</td>
+
+        {% if not isNotHod %}
         <td>
           <div class="flex gap-x-4 w-1/2 justify-center">
             <i class="fa-solid fa-pen-to-square text-md"></i>
             <i class="fa-solid fa-trash-can text-md text-red-500"></i>
           </div>
         </td>
+      {% endif %}
         
       </tr>
       {% endfor %}

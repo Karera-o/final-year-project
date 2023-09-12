@@ -1,13 +1,13 @@
 
-<div class="content px-8 py-6 flex flex-col gap-y-12 w-full">
+<div class="content px-8 py-6 flex flex-col gap-y-12 w-full h-[90vh] overflow-scroll">
   <div class="flex flex-col gap-y-4">
     <div class="flex justify-between">
       <h1 class="font-extrabold text-2xl">Activities</h1>
       <div class="flex gap-x-3 ">
-        <div class="flex gap-x-3 items-center rounded-md border border-1 bg-primary text-white px-3 ">
-          <p>Report</p>
+        <a href='{% url 'activity-report' %}' target="_blank" class="flex gap-x-3 items-center rounded-md border border-1 bg-primary text-white px-3 ">
+          <p >Report</p>
           <i class="fa-solid fa-download"></i>
-        </div>
+        </a>
         <select name="" id="" class="outline-none px-4 rounded-md ">
           <option value="" class="border-none">2023</option>
           <option value="">2022</option>
@@ -25,7 +25,7 @@
           </span>
           <div >
             <p class="text-primary opacity-50">All Activities</p>
-            <p class="">98</p>
+            <p class="">{{totalActivities}}</p>
           </div>
         </div>
         <div class="flex gap-x-3 w-full bg-white py-4 px-5 shadow-md rounded-md">
@@ -34,7 +34,7 @@
           </span>
           <div >
             <p class="text-primary opacity-50">Completed</p>
-            <p class="">98</p>
+            <p class="">{{completed_activities}}</p>
           </div>
         </div>
         <div class="flex gap-x-3 w-full bg-white py-4 px-5 shadow-md rounded-md">
@@ -43,7 +43,7 @@
           </span>
           <div >
             <p class="text-primary opacity-50">Pending</p>
-            <p class="">98</p>
+            <p class="">{{pending_activities}}</p>
           </div>
         </div>
         <div class="flex gap-x-3 w-full bg-white py-4 px-5 shadow-md rounded-md">
@@ -52,7 +52,7 @@
           </span>
           <div >
             <p class="text-primary opacity-50">Cancelled</p>
-            <p class="">98</p>
+            <p class="">{{canceled_activities}}</p>
           </div>
         </div>
       </div>
@@ -65,7 +65,10 @@
  <div class="w-full flex flex-col gap-y-2 ">
   <div class="flex gap-x-6">
     <h1 class="text-xl font-bold">Activities</h1>
+    {% if not isNotHod %}
     <a hx-get='{% url 'add-activity' %}' hx-target='.content' hx-swap='outerHTML' class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Add New</a>
+      {% endif %}
+    
     <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Activities (Excel)</a>
     <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Activities (PDF)</a>
   </div>
@@ -79,10 +82,14 @@
       <th>Due Date</th>
       <th>End Date</th>
       <th>Status</th>
+      {% if not isNotHod %}
       <th>Operation</th>
+      {% endif %}
     </tr>
     </thead>
     <tbody class="text-xs">
+      
+
       {% for activity in activities %}
       
       <tr class="border-b ">
@@ -92,12 +99,15 @@
         <td>{{activity.end_date}}</td>
       
         <td class="text-green-400 font-bold">{{activity.status}}</td>
+        {% if not isNotHod %}
         <td>
           <div class="flex gap-x-4 w-1/2 justify-center">
-            <a href='{% url 'update-activity' activity.id %}'><i class="fa-solid fa-pen-to-square text-md"></i></a>
-            <a href='{% url 'del-activity' activity.id %}' ><i class="fa-solid fa-trash-can text-md text-red-500"></i></a>
+            <a hx-get='{% url 'update-activity' activity.id %}' hx-target='.content' hx-swap='outerHTML'><i class="fa-solid fa-pen-to-square text-md"></i></a>
+            <a hx-get='{% url 'del-activity' activity.id %}' hx-target='.content' hx-swap='outerHTML'><i class="fa-solid fa-trash-can text-md text-red-500"></i></a>
           </div>
         </td>
+      {% endif %}
+        
         
       </tr>
       {% endfor %}

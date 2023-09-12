@@ -17,12 +17,12 @@
                 <div class="flex flex-col gap-y-5 w-full">
                     <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
                         <img src="{% static 'Images/icons/user.svg' %}" alt="" class="w-5">
-                        <input type="{{form.first_name.field.widget.input_type}}" placeholder="John" class="w-full outline-none" name='{{form.first_name.html_name}}'>
+                        <input type="{{form.first_name.field.widget.input_type}}" placeholder="First name" class="w-full outline-none" name='{{form.first_name.html_name}}'>
                         {% comment %} {{form.first_name}} {% endcomment %}
                     </div>
                     <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">
                         <img src="{% static 'Images/icons/user.svg' %}" alt="" class="w-5">
-                        <input type="{{form.last_name.field.widget.input_type}}" placeholder="Doe" class="w-full outline-none" name='{{form.last_name.html_name}}'>
+                        <input type="{{form.last_name.field.widget.input_type}}" placeholder="Last name" class="w-full outline-none" name='{{form.last_name.html_name}}'>
                         {% comment %} {{form.last_name}} {% endcomment %}
                     </div>
                     <div class="flex  gap-2 items-center rounded-md shadow-lg shadow-blue-50 px-2 py-2 border  border-[#E0E6F0]">

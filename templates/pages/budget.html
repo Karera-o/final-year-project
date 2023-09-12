@@ -1,0 +1,62 @@
+
+<div class="content px-8 py-6 flex flex-col gap-y-12 h-[90vh] overflow-hidden">
+          
+  <div class="flex justify-between">
+    <div class="bg-white flex py-3 px-3 gap-x-3 rounded-md shadow-lg text-sm w-min text-primary">
+      <h1 class="text-xl font-bold">Budget</h1>
+    </div>
+    <div class="flex gap-x-3 ">
+      <a href='{% url 'budget-report' %}' target="_blank" class="flex gap-x-3 items-center rounded-md border border-1 bg-primary text-white px-3 ">
+        <p >Report</p>
+        <i class="fa-solid fa-download"></i>
+      </a>
+      <select name="" id="" class="outline-none px-4 rounded-md ">
+        <option value="" class="border-none">2023</option>
+        <option value="">2022</option>
+        <option value="">2021</option>
+        <option value="">2020</option>
+      </select>
+    </div>
+  </div>
+
+ <div class="w-full flex flex-col gap-y-2 ">
+  <div class="flex gap-x-6">
+    {% if not isNotHod %}
+    <a hx-get='{% url 'add-budget' %}' hx-target='.content' hx-swap='outerHTML' class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Add New</a>
+      {% endif %}
+    
+    <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Announcements (Excel)</a>
+    <a href="" class="border px-3 py-2 border-gray-300 rounded text-xs font-bold">Export Announcements (PDF)</a>
+  </div>
+
+  <table class="table-fixed  bg-white rounded-md shadow-lg w-full">
+   
+    
+    <thead class="border-b text-left">
+      <tr class=" ">
+      <th class="py-3 px-2 ">Department</th>
+      <th>Amount From Church</th>
+      <th>Amount From Members</th>
+      <th>Start Date </th>
+      <th>End Date </th>
+     
+    </tr>
+    </thead>
+    <tbody class="text-xs">
+      {% for item in budget  %}
+      <tr class="border-b ">
+        <td class="py-3 px-2 ">{{item.department}}</td>
+        <td>{{item.amount_from_church}}</td>
+        <td>{{item.amount_from_members}}</td>
+        <td>{{item.start_date}}</td>
+        <td>{{item.end_date}}</td>
+       
+      </tr>
+      {% endfor %}
+      
+   
+    </tbody>
+  </table>
+ </div>
+</div>
+
