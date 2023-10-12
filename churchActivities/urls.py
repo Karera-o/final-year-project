@@ -43,6 +43,7 @@ urlpatterns = [
     path('activity-report/',views.ActivityReport.as_view(),name='activity-report'),
     path('donation-report/',views.DonationReport.as_view(),name='donation-report'),
     path('paypack/',views.paypack,name='paypack'),
+     path('webhook/',views.paypack1,name='webhook'),
 
     
 ]
