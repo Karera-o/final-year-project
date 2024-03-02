@@ -8,9 +8,202 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from datetime import datetime
 from django.db.models.functions import ExtractYear
+from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Sum
+
+
+from django.core.mail import send_mail
+from django.conf import settings
+from django.http import HttpResponse
+
+
+import requests
+import json
+from paypack.transactions import Transaction
+
+from django.http import JsonResponse
+from django.http import HttpResponseServerError
+
+
+from io import BytesIO
+from django.http import HttpResponse, HttpResponseServerError
+from django.template.loader import get_template
+from django.views import View
+from xhtml2pdf import pisa
+
+import requests
+import math
+import random
+import os
+
+from django.http import HttpResponse
 
 isNotAdmin = True
 isNotHod = True
+# global totalActivities
+# global totalEvents
+# global totalBudget
+
+def eventsData(request):
+    user = request.user
+    events = []
+
+    # if request.headers.get('HX-Request') and request.method=='POST':
+    #     year = int(request.POST['year'])
+
+    # else:
+    year = datetime.now().year
+    
+    # not user.is_superuser or  not user.groups.filter(name='Admin') or not 
+    if user.groups.filter(name='HOD') and not user.groups.filter(name='Admin'):
+        department = DepartmentHOD.objects.get(hod=user)
+        events = Event.objects.annotate(year=ExtractYear('due_date')).filter(department=department.department,year=year)
+    else:
+        events = Event.objects.all()
+    
+    completed_events = 0
+    pending_events = 0
+    canceled_events = 0
+    for event in events:
+        if event.status == 'Completed':
+            completed_events += 1
+        if event.status == 'Pending':
+            pending_events += 1
+        if event.status == 'Canceled':
+            canceled_events += 1
+    global totalEvents  
+    totalEvents = completed_events + pending_events + canceled_events
+    isNotHod = True
+    if user.groups.filter(name='HOD').exists():
+        isNotHod = False
+        
+    context={
+        'events':events,
+        'isNotAdmin':isNotAdmin,
+        'isNotHod': isNotHod,
+        'completed_events':completed_events,
+        'pending_events': pending_events,
+        'canceled_events':canceled_events,
+        'totalEvents':totalEvents,
+
+
+    }
+    
+    return context
+
+@login_required
+def activities(request):
+    
+    user = request.user
+    activities = []
+    if user.groups.filter(name='HOD') and not user.groups.filter(name='Admin'):
+        department = DepartmentHOD.objects.get(hod=user)
+        events = Event.objects.filter(department=department.department)
+        for event in events:
+
+            activities += Activity.objects.filter(event=event)
+    else:
+        activities = Activity.objects.all()
+
+    completed_activities = 0
+    pending_activities = 0
+    canceled_activities = 0
+    for activity in activities:
+        if activity.status == 'Completed':
+            completed_activities += 1
+        if activity.status == 'Pending':
+            pending_activities += 1
+        if activity.status == 'Canceled':
+            canceled_activities += 1
+    global totalActivities
+    totalActivities = completed_activities + pending_activities + canceled_activities
+    
+    isNotHod = True
+    if user.groups.filter(name='HOD').exists():
+        isNotHod = False
+    context={
+        'activities':activities,
+        'isNotAdmin':isNotAdmin,
+        'isNotHod': isNotHod,
+        'completed_activities':completed_activities,
+        'pending_activities': pending_activities,
+        'canceled_activities':canceled_activities,
+        'totalActivities':totalActivities,
+    }
+    
+    return render(request, 'pages/activities.html',context)
+
+
+class BudgetReport(View):
+    def get(self, request, *args, **kwargs):
+        # Get the template
+        template = get_template('Reports/budget-report.html')
+        year = datetime.now().year
+        user = request.user
+        department = None
+    # not user.is_superuser or  not user.groups.filter(name='Admin') or not 
+        if user.groups.filter(name='HOD') and not user.groups.filter(name='Admin'):
+            department = DepartmentHOD.objects.get(hod=user)
+            budget = Budget.objects.annotate(year=ExtractYear('start_date')).filter(department=department.department,year=year)
+        else:
+            
+            budget = Budget.objects.all()
+
+
+        churchTotal = budget.aggregate(churchTotal=Sum('amount_from_church'))['churchTotal']
+        membersTotal = budget.aggregate(membersTotal=Sum('amount_from_members'))['membersTotal']
+
+        global totalBudget
+        totalBudget = churchTotal + membersTotal
+        budgets = {}
+
+        donationTotal = 0
+        for item in budget:
+
+            total = Payment.objects.filter(department=item.department).aggregate(total=Sum('amount_given'))['total']
+            if total is None:
+                total = 0
+
+            donationTotal += total
+            budgets[item] = total
+
+        print(donationTotal)
+            
+        
+        if department == None:
+            department = ''
+
+        
+
+        from datetime import date
+        date_now = date.today
+        image = 'static/Images/adventist.jpg'
+        context={
+        
+        'date':date_now,
+        'image':image,
+        'budgets':budgets,
+        'department':department,
+        'churchTotal':churchTotal,
+        'membersTotal':membersTotal,
+        'donationTotal':donationTotal,
+
+        }
+        
+         # Provide any context data required by your template
+
+        # Render the template
+        html = template.render(context)
+
+        # Create a PDF instance
+        result = BytesIO()
+        pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+
+        if not pdf.err:
+            return HttpResponse(result.getvalue(), content_type='application/pdf')
+        
+        return HttpResponse("Error generating PDF", status=500)
+
 #Signup
 def signUp(request):
     pageTitle = 'SignUp'
@@ -110,12 +303,51 @@ def userDashboard(request):
         
 
 #Admin dashboard
-@is_admin
+# @is_hod
+# @is_admin
 def adminDashboard(request):
 
     user = request.user
 
     groups = user.groups.all()
+    year = datetime.now().year
+    activities = []
+    if user.groups.filter(name='HOD') and not user.groups.filter(name='Admin'):
+        department = DepartmentHOD.objects.get(hod=user)
+        events = Event.objects.filter(department=department.department)
+        for event in events:
+
+            activities += Activity.objects.filter(event=event)
+    else:
+        activities = Activity.objects.all()
+
+
+    completed_activities = 0
+    pending_activities = 0
+    canceled_activities = 0
+    for activity in activities:
+        if activity.status == 'Completed':
+            completed_activities += 1
+        if activity.status == 'Pending':
+            pending_activities += 1
+        if activity.status == 'Canceled':
+            canceled_activities += 1
+    global totalActivities
+    totalActivities = completed_activities + pending_activities + canceled_activities
+
+    if user.groups.filter(name='HOD') and not user.groups.filter(name='Admin'):
+        department = DepartmentHOD.objects.get(hod=user)
+        budget = Budget.objects.annotate(year=ExtractYear('start_date')).filter(department=department.department,year=year)
+    else:
+            
+        budget = Budget.objects.all()
+
+
+    churchTotal = budget.aggregate(churchTotal=Sum('amount_from_church'))['churchTotal']
+    membersTotal = budget.aggregate(membersTotal=Sum('amount_from_members'))['membersTotal']
+
+    global totalBudget
+    totalBudget = churchTotal + membersTotal
 
     for item in groups:
         group= item
@@ -126,10 +358,18 @@ def adminDashboard(request):
     if user.groups.filter(name='Admin').exists() or user.is_superuser:
         isAdmin = True
     print(user.is_superuser)
+
+    totalEvents= eventsData(request)["totalEvents"]
+
     context={
         'user':user,
         'isAdmin':isAdmin,
         'group':group,
+        'activities':activities,
+        'totalEvents': totalEvents,
+        'totalActivities': totalActivities,
+        'totalBudget': totalBudget,
+        'completed_activities': completed_activities,
         
     }
     if request.headers.get('HX-Request'):
@@ -143,6 +383,45 @@ def hodDashboard(request):
     user = request.user
     
     groups = user.groups.all()
+    totalEvents= eventsData(request)["totalEvents"]
+    year = datetime.now().year
+    activities = []
+    if user.groups.filter(name='HOD') and not user.groups.filter(name='Admin'):
+        department = DepartmentHOD.objects.get(hod=user)
+        events = Event.objects.filter(department=department.department)
+        for event in events:
+
+            activities += Activity.objects.filter(event=event)
+    else:
+        activities = Activity.objects.all()
+
+
+    completed_activities = 0
+    pending_activities = 0
+    canceled_activities = 0
+    for activity in activities:
+        if activity.status == 'Completed':
+            completed_activities += 1
+        if activity.status == 'Pending':
+            pending_activities += 1
+        if activity.status == 'Canceled':
+            canceled_activities += 1
+    global totalActivities
+    totalActivities = completed_activities + pending_activities + canceled_activities
+
+    if user.groups.filter(name='HOD') and not user.groups.filter(name='Admin'):
+        department = DepartmentHOD.objects.get(hod=user)
+        budget = Budget.objects.annotate(year=ExtractYear('start_date')).filter(department=department.department,year=year)
+    else:
+            
+        budget = Budget.objects.all()
+
+
+    churchTotal = budget.aggregate(churchTotal=Sum('amount_from_church'))['churchTotal']
+    membersTotal = budget.aggregate(membersTotal=Sum('amount_from_members'))['membersTotal']
+
+    global totalBudget
+    totalBudget = churchTotal + membersTotal
 
     for item in groups:
         group= item
@@ -156,6 +435,11 @@ def hodDashboard(request):
         'isNotHod': isNotHod,
         'department':department,
         'group':group,
+        'activities':activities,
+        'totalEvents': totalEvents,
+        'totalActivities': totalActivities,
+        'totalBudget': totalBudget,
+        'completed_activities': completed_activities,
         
     }
     if request.headers.get('HX-Request'):
@@ -178,52 +462,6 @@ def members(request):
     return render(request, 'pages/members.html',context)
 
 
-def eventsData(request):
-    user = request.user
-    events = []
-
-    # if request.headers.get('HX-Request') and request.method=='POST':
-    #     year = int(request.POST['year'])
-
-    # else:
-    year = datetime.now().year
-    
-    # not user.is_superuser or  not user.groups.filter(name='Admin') or not 
-    if user.groups.filter(name='HOD') and not user.groups.filter(name='Admin'):
-        department = DepartmentHOD.objects.get(hod=user)
-        events = Event.objects.annotate(year=ExtractYear('due_date')).filter(department=department.department,year=year)
-    else:
-        events = Event.objects.all()
-    
-    completed_events = 0
-    pending_events = 0
-    canceled_events = 0
-    for event in events:
-        if event.status == 'Completed':
-            completed_events += 1
-        if event.status == 'Pending':
-            pending_events += 1
-        if event.status == 'Canceled':
-            canceled_events += 1
-        
-    totalEvents = completed_events + pending_events + canceled_events
-    isNotHod = True
-    if user.groups.filter(name='HOD').exists():
-        isNotHod = False
-        
-    context={
-        'events':events,
-        'isNotAdmin':isNotAdmin,
-        'isNotHod': isNotHod,
-        'completed_events':completed_events,
-        'pending_events': pending_events,
-        'canceled_events':canceled_events,
-        'totalEvents':totalEvents,
-
-
-    }
-    
-    return context
 #Events Page
 @login_required
 def events(request):
@@ -257,7 +495,7 @@ def activities(request):
             pending_activities += 1
         if activity.status == 'Canceled':
             canceled_activities += 1
-        
+    global totalActivities
     totalActivities = completed_activities + pending_activities + canceled_activities
     
     isNotHod = True
@@ -393,16 +631,7 @@ def addAnnouncement(request):
     return render(request, 'pages/add-announcement.html',context)
         
 # @is_hod   
-def deletingEvent(request,id):
-    
-    try:
-        event = Event.objects.get(id=id)
-    
-        event.delete()
-    except Exception:
-        print('Error')
-        
-    return redirect('events')
+
 # @is_hod
 def updateEvent(request,id):
     department = DepartmentHOD.objects.get(hod=request.user)
@@ -431,7 +660,17 @@ def updateEvent(request,id):
     except Exception:
         print('Error')
         return redirect('events')
+    
+def deletingEvent(request,id):
+    
+    try:
+        event = Event.objects.get(id=id)
+    
+        event.delete()
+    except Exception:
+        print('Error')
         
+    return redirect('events')
 # @is_hod
 def deletingActivity(request,id):
     
@@ -580,11 +819,7 @@ def addTitheOfferings(request):
  
 
 
-from io import BytesIO
-from django.http import HttpResponse, HttpResponseServerError
-from django.template.loader import get_template
-from django.views import View
-from xhtml2pdf import pisa
+
 
 class html_to_pdf_view(View):
     def get(self, request, *args, **kwargs):
@@ -662,7 +897,7 @@ class html_to_pdf_view(View):
         
         return HttpResponse("Error generating PDF", status=500)
     
-from django.db.models import Sum
+
 class BudgetReport(View):
     def get(self, request, *args, **kwargs):
         # Get the template
@@ -677,11 +912,13 @@ class BudgetReport(View):
         else:
             
             budget = Budget.objects.all()
-   
+
+
         churchTotal = budget.aggregate(churchTotal=Sum('amount_from_church'))['churchTotal']
         membersTotal = budget.aggregate(membersTotal=Sum('amount_from_members'))['membersTotal']
 
-        
+        global totalBudget
+        totalBudget = churchTotal + membersTotal
         budgets = {}
 
         donationTotal = 0
@@ -872,9 +1109,7 @@ class DonationReport(View):
         
         return HttpResponse("Error generating PDF", status=500)
 
-from django.core.mail import send_mail
-from django.conf import settings
-from django.http import HttpResponse
+
 
 def sendEmail(request):
     send_mail(
@@ -900,16 +1135,27 @@ def payment(request):
     if user.groups.filter(name='HOD') and not user.groups.filter(name='Admin'):
         department = DepartmentHOD.objects.get(hod=user)
         payments = Payment.objects.annotate(year=ExtractYear('date_created')).filter(department=department.department,year=year)
+        departments = 1
+        donors = 4
 
     elif not user.groups.filter(name='HOD') and not user.groups.filter(name='Admin'):
         print ('Found')
         payments = Payment.objects.annotate(year=ExtractYear('date_created')).filter(member=user,year=year)
-
+        donors = 6
+        departments = 4
     else:
         payments = Payment.objects.all()
+        donors = 6
+        departments = 4
+
+    total = payments.aggregate(total=Sum('amount_given'))['total']
 
     context={
-        'payments': payments
+        'payments': payments,
+        'departments': departments,
+        'donors' :donors,
+        'total' :total,
+
     }
 
     return render(request, 'pages/payment.html',context)
@@ -972,12 +1218,7 @@ def payment(request):
 #     else:
 #         return JsonResponse({'status': 'error', 'message': response.message})
 
-import requests
-import math
-import random
-import os
 
-from django.http import HttpResponse
 def paymentFlutter(request,user,amount):
 # FLWSECK-936224a16e1619610fbd6df5c2d221ae-18a3253e92dvt-X
 
@@ -1020,40 +1261,16 @@ def paymentFlutter(request,user,amount):
 
 
 def paymentFlutterWave(request):
+    from paypack.client import HttpClient
 
-    user = request.user
-    
+    client_id="8555a5c6-519a-11ee-af6a-deaddb65b9c2"
+    client_secret="55cc09cb4c4c0bf05e0dbf6e83cec0deda39a3ee5e6b4b0d3255bfef95601890afd80709"
 
-    if request.method=='POST':
+    HttpClient(client_id=client_id, client_secret=client_secret)
 
-        form = DonationForm(request.POST)
-        if form.is_valid():
-
-            instance = form.save(commit=False)
-            instance.member = user
-            
-            instance.save()
-            link = paymentFlutter(request,user=user,amount=float(instance.amount_given))
-            print('hi')
-            print(link)
-            try:
-
-                return redirect(link)
-                print('hi')
-            except BrokenPipeError:
-                return HttpResponseServerError('An error occurred while redirecting.')
-            
-        else:
-            print(form.errors)
-
-    form = DonationForm()
-    context ={
-        'form': form,
-        'user': user,
-        
-    }
-            
-    return render(request, 'pages/donation.html',context)
+    cashin = Transaction().cashin(amount=100, phone_number="0780732171", mode="development")   
+    print(cashin)   
+    return render(request, 'pages/donation.html')
 
 
 def redirectPayment(request,link):
@@ -1132,46 +1349,60 @@ def budget(request):
 # from paypack.client import HttpClient
 # from paypack.transactions import Transaction
 
-import requests
-import json
-from paypack.transactions import Transaction
+
+
+# userPay = None
 def paypack(request):
-
-    # url = "https://payments.paypack.rw/api/transactions/cashin?Idempotency-Key=OldbBsHAwAdcYalKLXuiMcqRrdEcDGRv"
-
-
-    # payload = json.dumps({
-    # "items": [{
-    #         "name": "T-shirt",
-    #         "price": 100,
-    #         "quantity": 1
-    #     }],
-    # "app_id": "00cc2e34-515d-11ee-8aa9-deaddb65b9c2",
-    # "email": "olivierkarera20231@mail.com"
-    # })
-    # headers = {
-    
-    # 'Content-Type': 'application/json'
-    # }
-    
-    # response = requests.post(url, headers=headers, data=payload)
-
-    # print(response.text)
 
     from paypack.client import HttpClient
 
-    client_id="336ace48-d8be-11ee-aa84-deaddb65b9c2"
-    client_secret="8d5a152375f90d77a0bbd3c7b2e3965bda39a3ee5e6b4b0d3255bfef95601890afd80709"
+    client_id="cc5ec458-d8cb-11ee-9be8-deaddb65b9c2"
+    client_secret="8afd22a4cb66b83e65397bb97c5fee55da39a3ee5e6b4b0d3255bfef95601890afd80709"
 
     HttpClient(client_id=client_id, client_secret=client_secret)
 
+    user = request.user
+    # cashin = Transaction().cashin(amount=100, phone_number="0780732171", mode="development")
+    print("View")
+    if request.method=='POST':
 
-    cashin = Transaction().cashin(amount=100, phone_number="0780732171")
-    print(cashin)
+        print("Post")
+
+        form = DonationForm(request.POST)
+        if form.is_valid():
+            print("Valid")
+
+            instance = form.save(commit=False)
+            instance.member = user
+            global userPay 
+            userPay = instance
+            # instance.save()
+            cashin = Transaction().cashin(amount=float(instance.amount_given), phone_number="0780732171", mode="development")
+            print(cashin)
+            return redirect('payment')
+        else:
+            print(form.errors)
+
+    form = DonationForm()
+    context ={
+        'form': form,
+        'user': user,
+        
+    }
+            
+    return render(request, 'pages/donation.html',context)
 
 
+@csrf_exempt
+def paypack1(request):
+    body = json.loads(request.body)
+    
+    if request.method == 'POST' :
+        if body["data"]["status"] == 'successful':
+            print(body)
+            userPay.save()
+    else:
+        print("Waiting...")
 
+    print(body)
     return HttpResponse('Success')
-
-
-
