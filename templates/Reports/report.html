@@ -1,152 +1,144 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <title>Activities Report</title>
 
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-          }
-          
-          .container {
-            color: #00295B;
-            width: 70%;
-            margin: 3rem auto 0;
-            display: flex;
-            flex-direction: column;
-            gap: 5rem;
-          }
-          .container .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          }
-          .container .header div img {
-            width: 100px;
-          }
-          .container .header div p {
-            text-align: left;
-            font-size: 16px;
-            font-weight: bolder;
-          }
-          .container .header p {
-            text-align: right;
-            font-size: 12px;
-            
-          }
-          .container .table {
-            display: flex;
-            flex-direction: column;
-            /* gap: 2rem; */
-            align-items: center;
-            width: 100%;
-          }
-          .container .table h1 {
-            font-size: 20px;
-            text-align: center;
-          }
-          .container .table table {
-            background-color: white;
-            box-shadow: 10px 10px 10px rgb(233, 241, 244);
-            width: 100%;
-            border-radius: 5px;
-          }
-          .container .table table thead {
-            border-bottom: 1px solid;
-            text-align: left;
-          }
-          .container .table table thead th {
-            padding: 3px 2px;
-            background-color: #00295B;
-            color: white;
-            padding: .6rem;
-          }
-          .container .table table tbody {
-            font-size: smaller;
-          }
-          .container .table table tbody tr {
-            border-bottom: 1px solid;
-          }
-          .container .table table tbody tr td {
-            padding: 1rem;
-            border-bottom: 1px solid rgb(213, 213, 213);
-            text-align: center;
-          }
-          .total{
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
 
-          }
-          .total .totals{
-            display: inline;
-            margin-top: 30px;
-            /* text-align: left; */
-          }
-          .total .totals .tithe{
-            text-align: right;
-            background-color: yellow;
-          }
-          .total .totals p span {
-            font-weight: bold;
-          }
+      .container {
+        color: #00295b;
+        width: 70%;
+        margin: 3rem auto 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5rem;
+      }
+      .container .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .container .header div img {
+        width: 100px;
+      }
+      .container .header div p {
+        text-align: left;
+        font-size: 16px;
+        font-weight: bolder;
+      }
+      .container .header p {
+        text-align: right;
+        font-size: 12px;
+      }
+      .container .table {
+        display: flex;
+        flex-direction: column;
+        /* gap: 2rem; */
+        align-items: center;
+        width: 100%;
+      }
+      .container .table h1 {
+        font-size: 20px;
+        text-align: center;
+      }
+      .container .table table {
+        background-color: white;
+        box-shadow: 10px 10px 10px rgb(233, 241, 244);
+        width: 100%;
+        border-radius: 5px;
+      }
+      .container .table table thead {
+        border-bottom: 1px solid;
+        text-align: left;
+      }
+      .container .table table thead th {
+        padding: 3px 2px;
+        background-color: #00295b;
+        color: white;
+        padding: 0.6rem;
+      }
+      .container .table table tbody {
+        font-size: smaller;
+      }
+      .container .table table tbody tr {
+        border-bottom: 1px solid;
+      }
+      .container .table table tbody tr td {
+        padding: 1rem;
+        border-bottom: 1px solid rgb(213, 213, 213);
+        text-align: center;
+      }
+      .total {
+      }
+      .total .totals {
+        display: inline;
+        margin-top: 30px;
+        /* text-align: left; */
+      }
+      .total .totals .tithe {
+        text-align: right;
+        background-color: yellow;
+      }
+      .total .totals p span {
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="container">
-
-        <div class="header">
-            <div>
-                <img src="{{image}}" alt="">
-                <p>AUCA Church</p>
-            </div>
-            <p>Done on {{date}}</p>
+      <div class="header">
+        <div>
+          <img src="{{image}}" alt="" />
+          <p>UNILAK Church</p>
         </div>
-        <div class="table">
-            <h1>Tithe and Offering Report</h1>
-            <table>
-                <thead>
-                    <tr >
-                        <th>Activity Name</th>
-                        <th>Sabbath</th>
-                        <th>Quarter</th>
-                        <th>Returned</th>
-                        <th>Abatanze</th>
-                        <th>Date</th>
-                      </tr>
-                </thead>
-                <tbody>
+        <p>Done on {{date}}</p>
+      </div>
+      <div class="table">
+        <h1>Tithe and Offering Report</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Activity Name</th>
+              <th>Sabbath</th>
+              <th>Quarter</th>
+              <th>Returned</th>
+              <th>Abatanze</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for activity in activities %}
 
-                    {% for activity in activities %}
-        
-        <tr >
-          <td >{{activity.offering_type}}</td>
-          <td>{{activity.sabbath}}</td>
-          <td>{{activity.quarter}}</td>
-          <td>{{activity.returned}}</td>
-          <td>{{activity.returner}}</td>
-          <td>{{activity.date}}</td>
-          
-        </tr>
-        {% endfor %}
-                    
-                </tbody>
-            </table>
-        </div>
+            <tr>
+              <td>{{activity.offering_type}}</td>
+              <td>{{activity.sabbath}}</td>
+              <td>{{activity.quarter}}</td>
+              <td>{{activity.returned}}</td>
+              <td>{{activity.returner}}</td>
+              <td>{{activity.date}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
 
-        <div class="totals" style="display: inline;">
-          <h2>Total Returned</h2>
+      <div class="totals" style="display: inline">
+        <h2>Total Returned</h2>
 
-        <p><span>First Quarter:</span>  {{quarter1Total|floatformat:2}} Frw</p>
-        <p><span>Second Quarter:</span>   {{quarter2Total|floatformat:2}} Frw</p>
-        <p><span>Third Quarter:  </span> {{quarter3Total|floatformat:2}} Frw</p>
-        <p><span>Fourth Quarter:</span>   {{quarter4Total|floatformat:2}} Frw</p>
-        </div>
+        <p><span>First Quarter:</span> {{quarter1Total|floatformat:2}} Frw</p>
+        <p><span>Second Quarter:</span> {{quarter2Total|floatformat:2}} Frw</p>
+        <p><span>Third Quarter: </span> {{quarter3Total|floatformat:2}} Frw</p>
+        <p><span>Fourth Quarter:</span> {{quarter4Total|floatformat:2}} Frw</p>
+      </div>
     </div>
-    
-</body>
+  </body>
 </html>
