@@ -16,7 +16,7 @@ html5lib==1.1
 idna==3.4
 lxml==4.9.3
 oscrypto==1.3.0
-paypack-py==1.0.4
+paypack-py
 Pillow==10.0.0
 psycopg2-binary==2.9.6
 pycparser==2.21
