@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-r6ri(04#zzrr_sr!6+ak9f8aad)-q_jw(8rmn*#65%1-@x^!m&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.paypack.rw', '.vercel.app','localhost', '*']
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app','localhost', '*']
 
 
 # Application definition
@@ -87,26 +87,26 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'URL': os.environ.get('POSTGRES_URL'),
-#         'NAME': os.environ.get('PGNAME'),
-#         'USER': os.environ.get('PGUSER'),
-#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-#         'HOST': os.environ.get('PGHOST'),
-#         'PORT': os.environ.get('PGPORT'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'URL': os.environ.get('POSTGRES_URL'),
+        'NAME': os.environ.get('PGNAME'),
+        'USER': os.environ.get('PGUSER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('PGHOST'),
+        'PORT': os.environ.get('PGPORT'),
+    }
+}
 
 
 # Password validation

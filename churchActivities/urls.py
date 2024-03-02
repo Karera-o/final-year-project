@@ -43,9 +43,12 @@ urlpatterns = [
     path('activity-report/',views.ActivityReport.as_view(),name='activity-report'),
     path('donation-report/',views.DonationReport.as_view(),name='donation-report'),
     path('paypack/',views.paypack,name='paypack'),
+<<<<<<< HEAD
      path('webhook/',views.paypack1,name='webhook'),
     #  path('openai/', botview.openaiView, name='openai'),
           
+=======
+>>>>>>> parent of acd46e6 (Presented version of the project)
 
     
 ]
