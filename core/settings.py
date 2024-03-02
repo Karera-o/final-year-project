@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'churchActivities',
-    'djangoflutterwave',
+    # 'djangoflutterwave',
     
     #  "django_browser_reload",
     #  'rest_framework',
@@ -81,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.app'
+WSGI_APPLICATION = 'core.wsgi.application'
 
 
 # Database
