@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views, botview
 urlpatterns = [
     path('', views.signUp, name='signup'),
     path('signin/', views.signIn, name='signin'),
@@ -44,6 +44,8 @@ urlpatterns = [
     path('donation-report/',views.DonationReport.as_view(),name='donation-report'),
     path('paypack/',views.paypack,name='paypack'),
      path('webhook/',views.paypack1,name='webhook'),
+    #  path('openai/', botview.openaiView, name='openai'),
+          
 
     
 ]

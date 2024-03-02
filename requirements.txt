@@ -9,10 +9,8 @@ click==8.1.4
 colorama==0.4.6
 cryptography==41.0.2
 cssselect2==0.7.0
+dj-database-url==2.1.0
 Django==3.2.21
-django-browser-reload==1.8.0
-djangoflutterwave==0.3.0
-djangorestframework==3.14.0
 fonttools==4.42.1
 html5lib==1.1
 idna==3.4
@@ -30,7 +28,6 @@ pyphen==0.14.0
 pypng==0.20220715.0
 python-bidi==0.4.2
 python-dotenv==1.0.0
-python-flutterwave==0.8.10
 pytz==2023.3.post1
 PyYAML==6.0
 qrcode==7.4.2

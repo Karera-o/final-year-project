@@ -1226,37 +1226,37 @@ def paymentFlutter(request,user,amount):
 #FLWSECK_TEST-83f1f44f7960a45b467de7bb57e1c9d2-X
     user = request.user
    
-    auth_token ='FLWSECK_TEST-192dbf3ff340f7a78724385909279c8d-X'
-    hed ={'Authorization':'Bearer '+auth_token,'Content-Type':'application/json'}
-    data = {
+    # auth_token ='FLWSECK_TEST-192dbf3ff340f7a78724385909279c8d-X'
+    # hed ={'Authorization':'Bearer '+auth_token,'Content-Type':'application/json'}
+    # data = {
           
-          "tx_ref": ''+str(math.floor(1000000 + random.random()*9000000)),
-          "amount": amount,
-          "currency": "RWF",
-          "redirect_url": "http://localhost:8000/payment/",
-          "payment_options": "mobilemoneyrwanda,card",
+    #       "tx_ref": ''+str(math.floor(1000000 + random.random()*9000000)),
+    #       "amount": amount,
+    #       "currency": "RWF",
+    #       "redirect_url": "http://localhost:8000/payment/",
+    #       "payment_options": "mobilemoneyrwanda,card",
           
-          "customer": {
-            "email": user.email,
-            "phone_number": user.phone,
-            'name': user.first_name+' '+user.last_name,
-          },
-          "customizations": {
-            "title": "Auca Church Activities Management System",
-            "description": "Helping the church to Grow.",
-            "logo": "static/Images/adventist.jpg",
-          },
-        }
+    #       "customer": {
+    #         "email": user.email,
+    #         "phone_number": user.phone,
+    #         'name': user.first_name+' '+user.last_name,
+    #       },
+    #       "customizations": {
+    #         "title": "Auca Church Activities Management System",
+    #         "description": "Helping the church to Grow.",
+    #         "logo": "static/Images/adventist.jpg",
+    #       },
+    #     }
 
-    url= 'https://api.flutterwave.com/v3/payments'
+    # url= 'https://api.flutterwave.com/v3/payments'
     
-    response = requests.post(url, json=data, headers=hed)
-    response = response.json()
-    print(response)
+    # response = requests.post(url, json=data, headers=hed)
+    # response = response.json()
+    # print(response)
 
-    link = response['data']['link']
-    print(link)
-    return link
+    # link = response['data']['link']
+    # print(link)
+    return {"Hello": "response"}
  
 
 
@@ -1356,8 +1356,8 @@ def paypack(request):
 
     from paypack.client import HttpClient
 
-    client_id="8555a5c6-519a-11ee-af6a-deaddb65b9c2"
-    client_secret="55cc09cb4c4c0bf05e0dbf6e83cec0deda39a3ee5e6b4b0d3255bfef95601890afd80709"
+    client_id="336ace48-d8be-11ee-aa84-deaddb65b9c2"
+    client_secret="8d5a152375f90d77a0bbd3c7b2e3965bda39a3ee5e6b4b0d3255bfef95601890afd80709"
 
     HttpClient(client_id=client_id, client_secret=client_secret)
 
