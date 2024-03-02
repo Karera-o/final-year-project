@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-r6ri(04#zzrr_sr!6+ak9f8aad)-q_jw(8rmn*#65%1-@x^!m&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.paypack.rw', '.vercel.app','localhost', '*']
+ALLOWED_HOSTS = ['127.0.0.1', '.paypack.rw', '.vercel.app','localhost', '172.105.189.108']
 
 
 # Application definition
@@ -67,7 +67,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
