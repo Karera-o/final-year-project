@@ -1356,8 +1356,8 @@ def paypack(request):
 
     from paypack.client import HttpClient
 
-    client_id="cc5ec458-d8cb-11ee-9be8-deaddb65b9c2"
-    client_secret="8afd22a4cb66b83e65397bb97c5fee55da39a3ee5e6b4b0d3255bfef95601890afd80709"
+    client_id="e6237f9a-d944-11ee-a4b9-deaddb65b9c2"
+    client_secret="cbf4e2bb442b3803582632ec572adc9ada39a3ee5e6b4b0d3255bfef95601890afd80709"
 
     HttpClient(client_id=client_id, client_secret=client_secret)
 
@@ -1377,7 +1377,7 @@ def paypack(request):
             global userPay 
             userPay = instance
             # instance.save()
-            cashin = Transaction().cashin(amount=float(instance.amount_given), phone_number="0780732171", mode="development")
+            cashin = Transaction().cashin(amount=float(instance.amount_given), phone_number="0782024954", mode="development")
             print(cashin)
             return redirect('payment')
         else:
