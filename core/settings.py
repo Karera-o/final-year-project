@@ -95,22 +95,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-# 	"default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
-# }
-
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'URL': os.environ.get('POSTGRES_URL'),
-        'NAME': os.environ.get('PGNAME'),
-        'USER': os.environ.get('PGUSER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('PGHOST'),
-        'PORT': os.environ.get('PGPORT'),
-    }
+	# "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    'default': dj_database_url.parse('postgres://church_activities_user:Xk38BNvw3kD4EnXn3NiIC0LUl3mvItxk@dpg-cnhp5n779t8c73e76v9g-a.oregon-postgres.render.com/church_activities'),
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'URL': os.environ.get('POSTGRES_URL'),
+#         'NAME': os.environ.get('PGNAME'),
+#         'USER': os.environ.get('PGUSER'),
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+#         'HOST': os.environ.get('PGHOST'),
+#         'PORT': os.environ.get('PGPORT'),
+#     }
+# }
 
 
 # Password validation
