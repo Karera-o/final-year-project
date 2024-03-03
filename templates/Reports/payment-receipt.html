@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Template</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        height: 100vh;
+
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column-reverse;
+        gap: 20px;
+
+      }
+      .container {
+        background-color: azure;
+        -webkit-box-shadow: 10px 10px 86px -26px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 10px 10px 86px -26px rgba(0, 0, 0, 0.75);
+        box-shadow: 10px 10px 86px -26px rgba(0, 0, 0, 0.75);
+        width: 100%;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        max-width: 500px;
+      }
+      .back-dashboard{
+        background-color: #00295B;
+        border-radius: 5px;
+        padding: 10px 15px;
+        color: white;
+        font-size: small;
+        cursor: pointer;
+        border: 1px solid #00295B;
+      }
+      .back-dashboard:hover{
+        /* background-color: rgb(0, 41, 91,.6); */
+        border: 1px solid white;
+        background-color: white;
+        color: #00295B;
+        box-shadow: 10px 10px 10px #e8edf3;;
+
+      }
+    </style>
+  </head>
+  <body>
+    <a class="back-dashboard" {% url "user-dashboard" %}>Back to dashboard</a>
+    <div class="container">
+      <!-- <div class="adventist_logo">Adventist Logo</div> -->
+      <img src={image} alt="logo">
+      <div>UNILAK Church Activity</div>
+
+      <div class="adventist_logo">Receipt</div>
+      <div class="firstname">
+        <span>FirstName:</span>
+        <span>{firstname}</span>
+      </div>
+      <div class="firstname">
+        <span>Donation type:</span>
+        <span>{donation_type}</span>
+      </div>
+      <div class="amount">
+        <span>Amount:</span>
+        <span>{amount}</span>
+      </div>
+      <div class="date">
+        <span>Date:</span>
+        <span>{date_created}</span>
+      </div>
+      
+      <div class="success_message">Thank you for your support!</div>
+    </div>
+  </body>
+</html>

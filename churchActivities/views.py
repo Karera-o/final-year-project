@@ -1279,7 +1279,6 @@ def redirectPayment(request,link):
 
 def addBudget(request):
     
-   
     department = DepartmentHOD.objects.get(hod=request.user)
     
     form = BudgetForm()
@@ -1387,11 +1386,9 @@ def paypack(request):
     context ={
         'form': form,
         'user': user,
-        
     }
             
     return render(request, 'pages/donation.html',context)
-
 
 @csrf_exempt
 def paypack1(request):
@@ -1408,6 +1405,16 @@ def paypack1(request):
         if body["data"]["status"] == 'successful':
             print(body)
             userPay.save()
+            image = 'static/Images/adventist.jpg'
+            context = {
+                "firstname":userPay.member.first_name,
+                "amount": userPay.amount,
+                "date_created": userPay.date_created,
+                "donation_type": userPay.donation_type,
+                "image": image
+
+            }
+            return render(request, 'pages/payment-receipt.html', context)
 
         elif body["data"]["status"] == 'failed':
             print('The transaction failed...')
