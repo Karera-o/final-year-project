@@ -1428,5 +1428,15 @@ def paypack1(request):
     else:
         print("Waiting...")
 
+    context = {
+                "firstname":userPay.member.first_name,
+                "amount": userPay.amount,
+                "date_created": userPay.date_created,
+                "donation_type": userPay.donation_type,
+                "image": image
+
+            }
+    return render(request, 'Reports/payment-receipt.html', context)
+
     # print(body)
     return HttpResponse('Success')
