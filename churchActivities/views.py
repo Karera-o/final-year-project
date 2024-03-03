@@ -1427,7 +1427,7 @@ def paypack1(request):
         print(body)
     else:
         print("Waiting...")
-
+    image = 'static/Images/adventist.jpg'
     context = {
                 "firstname":userPay.member.first_name,
                 "amount": userPay.amount,
