@@ -1414,7 +1414,7 @@ def paypack1(request):
                 "image": image
 
             }
-            return render(request, 'pages/payment-receipt.html', context)
+            return render(request, 'Reports/payment-receipt.html', context)
 
         elif body["data"]["status"] == 'failed':
             print('The transaction failed...')
