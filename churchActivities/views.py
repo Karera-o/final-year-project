@@ -1363,7 +1363,7 @@ def paypack(request):
 
     user = request.user
     # cashin = Transaction().cashin(amount=100, phone_number="0780732171", mode="development")
-    print("View")
+    # print("View")
     if request.method=='POST':
 
         print("Post")
@@ -1377,7 +1377,7 @@ def paypack(request):
             global userPay 
             userPay = instance
             # instance.save()
-            cashin = Transaction().cashin(amount=float(instance.amount_given), phone_number="0782024954", mode="development")
+            cashin = Transaction().cashin(amount=float(instance.amount_given), phone_number="0791920368", mode="development")
             print(cashin)
             return redirect('payment')
         else:
@@ -1395,14 +1395,31 @@ def paypack(request):
 
 @csrf_exempt
 def paypack1(request):
-    body = json.loads(request.body)
+
+    try:
+
+        body = json.loads(request.body)
     
-    if request.method == 'POST' :
+    except Exception:
+        print("Error: ....")
+    
+    if request.method == 'POST':
+
         if body["data"]["status"] == 'successful':
             print(body)
             userPay.save()
+
+        elif body["data"]["status"] == 'failed':
+            print('The transaction failed...')
+
+        else:
+            print('Oops.....')
+
+    if request.method == 'GET':
+        print(request.method)
+        print(body)
     else:
         print("Waiting...")
 
-    print(body)
+    # print(body)
     return HttpResponse('Success')
