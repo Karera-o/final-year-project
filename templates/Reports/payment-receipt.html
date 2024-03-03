@@ -52,34 +52,40 @@
         box-shadow: 10px 10px 10px #e8edf3;;
 
       }
+      img{
+        width: 100px;
+      }
+      .title{
+        font-weight: bolder;
+      }
     </style>
   </head>
   <body>
     <a class="back-dashboard" {% url "user-dashboard" %}>Back to dashboard</a>
     <div class="container">
       <!-- <div class="adventist_logo">Adventist Logo</div> -->
-      <img src={image} alt="logo">
-      <div>UNILAK Church Activity</div>
+      <img src='/static/Images/adventist.jpg' alt="logo">
+      <div class="title">UNILAK Church Activity</div>
 
       <div class="adventist_logo">Receipt</div>
       <div class="firstname">
         <span>FirstName:</span>
-        <span>{firstname}</span>
+        <span>Sailus</span>
       </div>
       <div class="firstname">
         <span>Donation type:</span>
-        <span>{donation_type}</span>
+        <span>Offerings</span>
       </div>
       <div class="amount">
         <span>Amount:</span>
-        <span>{amount}</span>
+        <span>1000 Frw</span>
       </div>
       <div class="date">
         <span>Date:</span>
-        <span>{date_created}</span>
+        <span>March 3, 2024</span>
       </div>
       
-      <div class="success_message">Thank you for your support!</div>
+      <div class="success_message title">Thank you for your support!</div>
     </div>
   </body>
 </html>

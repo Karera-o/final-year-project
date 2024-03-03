@@ -1439,8 +1439,23 @@ def paypack1(request):
 
             }
     print(context)
-    return redirect('events')
+    # return redirect('events')
     # return render(request, 'Reports/payment-receipt.html', context)
 
     # print(body)
-    # return HttpResponse('Success')
+    return HttpResponse('Success')
+
+def test(request):
+
+    global success
+    if success:
+         response_data = {'load_page': True}
+         success = None
+         
+    elif success == False:
+        response_data = {'load_page': False}
+        success = None
+
+    else:
+        response_data = {'load_page': None}
+    return JsonResponse(response_data)
