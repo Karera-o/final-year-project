@@ -1376,6 +1376,7 @@ def paypack(request):
             global userPay 
             userPay = instance
             # instance.save()
+            # 0791920368
             cashin = Transaction().cashin(amount=float(instance.amount_given), phone_number="0791920368", mode="development")
             print(cashin)
             return redirect('payment')
@@ -1427,16 +1428,19 @@ def paypack1(request):
         print(body)
     else:
         print("Waiting...")
+    # userPay.save()
     image = 'static/Images/adventist.jpg'
     context = {
-                "firstname":userPay.member.first_name,
-                "amount": userPay.amount,
-                "date_created": userPay.date_created,
-                "donation_type": userPay.donation_type,
+                "firstname":'Olivier',
+                "amount": 100,
+                "date_created": "date",
+                "donation_type": "test",
                 "image": image
 
             }
-    return render(request, 'Reports/payment-receipt.html', context)
+    print(context)
+    return redirect('events')
+    # return render(request, 'Reports/payment-receipt.html', context)
 
     # print(body)
-    return HttpResponse('Success')
+    # return HttpResponse('Success')

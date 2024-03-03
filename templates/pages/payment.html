@@ -73,7 +73,7 @@
         <button  class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Add New</button>
       </form> {% endcomment %}
       {% comment %} <a hx-get='{% url 'payment-wave' %}' hx-target='.content' hx-swap='outerHTML'  class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Add New</a> {% endcomment %}
-      <a hx-get='{% url 'paypack' %}' hx-target='.content' hx-swap='outerHTML'  class="px-3 py-2 rounded text-xs font-bold bg-primary text-white">Donate</a>
+      <a hx-get='{% url 'paypack' %}' hx-target='.content' hx-swap='outerHTML'  class="px-3 py-2 rounded text-xs font-bold bg-primary text-white cursor-pointer">Donate</a>
       {% comment %} {% endif %} {% endcomment %}
       {% comment %} <button type="button" onclick="makePayment()">Pay Now</button> {% endcomment %}
       
