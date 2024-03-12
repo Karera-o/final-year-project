@@ -1377,7 +1377,7 @@ def paypack(request):
             userPay = instance
             # instance.save()
             # 0791920368
-            cashin = Transaction().cashin(amount=float(instance.amount_given), phone_number="0782024954", mode="development")
+            cashin = Transaction().cashin(amount=float(instance.amount_given), phone_number="0780732171", mode="development")
             print(cashin)
             return redirect('payment')
         else:
