@@ -10,7 +10,7 @@
       </li>
       
       {% if not isNotHod %}
-      <li class="bg-white shadow-xl  w-full text-primary  cursor-pointer">
+      <li class=" shadow-xl  w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
        
         <a hx-get='{% url 'dashboard' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
         <i class="material-icons">dashboard</i>
@@ -23,7 +23,7 @@
         
         <a hx-get='{% url 'members' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
         <i class="material-icons">people</i>
-      <p class="hide">Members
+      <p class="hide">Church Members
       </p>
       </a>
     </li>
@@ -36,21 +36,21 @@
 
         <a hx-get='{% url 'events' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
         <i class="material-icons">event_available</i>
-        <p class="hide">Events</p>
+        <p class="hide">Church Events</p>
       </a>
       </li>
       <li class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
 
         <a hx-get='{% url 'activities' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
         <i class="material-icons">local_activity</i>
-        <p class="hide">Activities</p>
+        <p class="hide">Church Activities</p>
       </a>
       </li>
       <li class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
 
         <a hx-get='{% url 'payment' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
         <i class="material-icons">local_activity</i>
-        <p class="hide">Donation</p>
+        <p class="hide">Church Donation</p>
       </a>
       </li>
       {% if department.department.name == 'Finance' or  isAdmin%}
@@ -58,22 +58,22 @@
 
         <a hx-get='{% url 'tithe' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
           <i class="fa-solid fa-gifts"></i>
-        <p class="hide whitespace-nowrap">Tithe & Offerings</p>
+        <p class="hide whitespace-nowrap">Church Tithe & Offerings</p>
       </a>
       </li>
       {% endif %}
       <li class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
 
         <a hx-get='{% url 'budget' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
-        <i class="material-icons">announcement</i>
-        <p class="hide">Budget</p>
+        <i class="material-icons"> announcement</i>
+        <p class="hide">Church Budget</p>
       </a>
       </li>
       <li class=" w-full hover:bg-purple-200 hover:text-primary  cursor-pointer">
 
         <a hx-get='{% url 'announcements' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
         <i class="material-icons">announcement</i>
-        <p class="hide">Announcements</p>
+        <p class="hide">Church Announcements</p>
       </a>
       </li>
 
@@ -83,7 +83,7 @@
 
         <a hx-get='{% url 'assign-group' %}' hx-target='.content' hx-swap='outerHTML' class="flex items-center gap-x-1  py-4 px-5 h-full w-full">
         <i class="material-icons">people</i>
-      <p class="hide">Groups
+      <p class="hide">Church Groups
       </p>
       </a>
     </li>

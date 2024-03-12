@@ -88,17 +88,17 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
-	# "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
-    'default': dj_database_url.parse('postgres://church_activities_user:Xk38BNvw3kD4EnXn3NiIC0LUl3mvItxk@dpg-cnhp5n779t8c73e76v9g-a.oregon-postgres.render.com/church_activities'),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+# DATABASES = {
+# 	# "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
+#     'default': dj_database_url.parse('postgres://church_activities_user:Xk38BNvw3kD4EnXn3NiIC0LUl3mvItxk@dpg-cnhp5n779t8c73e76v9g-a.oregon-postgres.render.com/church_activities'),
+# }
 
 
 # DATABASES = {
